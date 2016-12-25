@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-calendar-form',
@@ -6,9 +6,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CalendarFormComponent implements OnInit {
 
+  public month: Date;
+
+  @Output()
+  private generateCells = new EventEmitter<Date>();
+
   constructor() { }
 
   ngOnInit() {
   }
-
 }

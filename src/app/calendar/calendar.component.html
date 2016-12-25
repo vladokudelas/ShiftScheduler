@@ -1,5 +1,12 @@
-<div class="row">
-  <div class="col-md-12">
-    calendar works!
-  </div>
+<div>
+    <div class="row">
+        <div *ngFor="let d of days">
+            <app-calendar-cell-day [day]="d"></app-calendar-cell-day>
+        </div>
+    </div>
+    <div class="row" *ngFor="let week of calendar">
+        <div *ngFor="let day of week">
+            <app-calendar-cell [day]="day"></app-calendar-cell>
+        </div>
+    </div>
 </div>

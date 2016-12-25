@@ -1,0 +1,33 @@
+.form-group {
+    margin-bottom: 2%;
+    margin: 1px;
+}
+
+.card {
+    padding-left: 2%;
+    padding-right: 2%;
+    margin-bottom: 0.2%;
+}
+
+.card-block {
+    padding: 1% 4% 0% 1%;
+    width: 7.5em;
+}
+
+.calendar-cell {
+    margin: 3px;
+}
+
+.calendar-cell-hours {
+    width: 100%;
+}
+
+.weekend,
+.holiday {
+    background: lightgray;
+}
+
+select.form-control:not([size]):not([multiple]) {
+    height: 1.5em;
+    width: auto;
+}

@@ -1,16 +1,16 @@
 <div class="row">
-  <div class="card">
-    <div class="card-block">
-      <h4 class="card-title">Nastavenie</h4>
-      <form class="form-horizontal">
-        <div class="form-group row">
-          <label for="month" class="col-md col-lg col-form-label">Mesiac</label>
-          <div class="col-md col-lg">
-            <input class="form-control" type="month" id="month">
-          </div>
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title">Nastavenie</h4>
+            <form class="form-horizontal" #calendarForm="ngForm">
+                <div class="form-group row">
+                    <label for="month" class="col-md col-lg col-form-label">Mesiac</label>
+                    <div class="col-md col-lg">
+                        <input class="form-control" [(ngModel)]="month" required type="month" id="month" name="month">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="!month" (click)="generateCells.emit()">Generuj</button>
+            </form>
         </div>
-        <button type="submit" class="btn btn-primary">Generuj</button>
-      </form>
     </div>
-  </div>
 </div>

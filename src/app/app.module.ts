@@ -6,12 +6,18 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { CalendarFormComponent } from './calendar-form/calendar-form.component';
+import { CalendarCellComponent } from './calendar-cell/calendar-cell.component';
+import { CalendarCellDayComponent } from './calendar-cell-day/calendar-cell-day.component';
+import { CalendarHoursComponent } from './calendar-hours/calendar-hours.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CalendarComponent,
-    CalendarFormComponent
+    CalendarFormComponent,
+    CalendarCellComponent,
+    CalendarCellDayComponent,
+    CalendarHoursComponent
   ],
   imports: [
     BrowserModule,
