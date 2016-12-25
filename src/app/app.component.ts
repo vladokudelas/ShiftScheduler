@@ -12,7 +12,6 @@ export class AppComponent {
   title = 'app works!';
 
   calendar = [];
-  days = ['Pondelok', 'Utorok', 'Streda', 'Stvrtok', 'Piatok', 'Sobota', 'Nedela'];
 
   public generateCells(month: Date) {
     console.log(`generate cells ${month}`);
