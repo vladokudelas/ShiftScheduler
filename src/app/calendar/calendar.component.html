@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="!isEmpty">
     <div class="row">
         <div *ngFor="let d of days">
             <app-calendar-cell-day [day]="d"></app-calendar-cell-day>

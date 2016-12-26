@@ -1,23 +1,17 @@
-<div class="card col-xs calendar-cell" [ngClass]="(day && day.isWeekendOrHoliday) ? 'weekend' : ''">
+<div class="card col-xs calendar-cell" [ngClass]="(day.isWeekend ? 'weekend' : '') + ' ' + (day.isHoliday ? 'holiday' : '')">
     <div class="card-block">
         <div class="text-xs-center">{{day.dateString}}</div>
         <form class="form-horizontal">
             <div class="form-group row">
                 <fieldset [disabled]="!day.isEditable">
-                    <select required class="form-control" id="test">
-                    <option selected value="0"> -- select -- </option>
-                    <option value="1">Kacenka</option>
-                    <option value="2">Matej</option>
-                    <option value="3">Mariana</option>
-                    <option value="4">David</option>
-                    <option value="5">Honza</option>
-                </select>
+                    <select required class="form-control" id="workUser">
+                        <option selected value="0"> -- select -- </option>
+                        <option *ngFor="let workUser of workUsers" [value]="workUser.id">{{workUser.name}}</option>
+                    </select>
                 </fieldset>
             </div>
             <div class="form-group row">
-                <!--<div class="form-control">-->
-                <span class="calendar-cell-hours text-xs-center">7.5 hours</span>
-                <!--</div>-->
+                <span class="calendar-cell-hours text-xs-center">{{day.shiftHours}} hours</span>
             </div>
         </form>
     </div>

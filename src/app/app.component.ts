@@ -1,49 +1,37 @@
-import { Component } from '@angular/core';
-
+import { Component, Inject, OnInit } from '@angular/core';
+import { Observer, Observable } from 'rxjs';
 import * as moment from 'moment';
 
-import {CalendarCell} from './model/calendar-cell';
+import { CalendarCell } from './model/calendar-cell';
+import { dispatcherToken, stateToken, Action, AppState } from './state';
+import * as Actions from './state/actions';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'app works!';
 
-  calendar = [];
+  public calendar = [];
+
+  constructor(
+    @Inject(dispatcherToken) private dispatcher: Observer<Action>,
+    @Inject(stateToken) private state: Observable<AppState>
+  ) {
+  }
+
+  public ngOnInit(): void {
+    this.state.subscribe(s => {
+      this.calendar = s.calendar;
+    });
+    this.dispatcher.next(new Actions.EmptyAction());
+  }
 
   public generateCells(month: Date) {
     console.log(`generate cells ${month}`);
 
     let m = moment(new Date(month)).date(1);
-    let fridayBefore = moment(m).add(-m.day() + 1 - 3, 'day');
-
-    this.calendar = [];
-    let firstWeek = [
-      new CalendarCell(undefined, moment(fridayBefore).add(-4, 'day')),
-      new CalendarCell(undefined, moment(fridayBefore).add(-3, 'day')),
-      new CalendarCell(undefined, moment(fridayBefore).add(-2, 'day')),
-      new CalendarCell(undefined, moment(fridayBefore).add(-1, 'day')),
-      new CalendarCell(5, fridayBefore),
-      new CalendarCell(6, moment(fridayBefore).add(1, 'day')),
-      new CalendarCell(0, moment(fridayBefore).add(2, 'day'))
-    ];
-    this.calendar.push(firstWeek);
-
-    let d = moment(fridayBefore).add(3, 'day');
-    let week = [];
-    this.calendar.push(week);
-    while (d.month() === (m.month() - 1) || d.month() === m.month()) {
-      week.push(new CalendarCell(d.weekday(), moment(d)));
-      d.add(1, 'day');
-
-      if (d.weekday() === 1) {
-        week = [];
-        this.calendar.push(week);
-      }
-    }
-
-    console.log(JSON.stringify(this.calendar, null, 2));
+    this.dispatcher.next(new Actions.GenerateCalendarAction(m));
   }
 }

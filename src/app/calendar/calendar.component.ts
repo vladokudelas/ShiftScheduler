@@ -11,6 +11,10 @@ export class CalendarComponent implements OnInit {
   public calendar = [];
   public days = ['Pondelok', 'Utorok', 'Streda', 'Stvrtok', 'Piatok', 'Sobota', 'Nedela'];
 
+  public get isEmpty(): boolean {
+    return !this.calendar || this.calendar.length === 0;
+  }
+
   constructor() { }
 
   ngOnInit() {

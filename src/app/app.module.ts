@@ -10,6 +10,10 @@ import { CalendarCellComponent } from './calendar-cell/calendar-cell.component';
 import { CalendarCellDayComponent } from './calendar-cell-day/calendar-cell-day.component';
 import { CalendarHoursComponent } from './calendar-hours/calendar-hours.component';
 
+import { UserStore, DateService, CalendarService } from './service';
+import { stateAndDispatcher } from './state/state';
+import { CalendarRequirementsFormComponent } from './calendar-requirements-form/calendar-requirements-form.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,14 +21,20 @@ import { CalendarHoursComponent } from './calendar-hours/calendar-hours.componen
     CalendarFormComponent,
     CalendarCellComponent,
     CalendarCellDayComponent,
-    CalendarHoursComponent
+    CalendarHoursComponent,
+    CalendarRequirementsFormComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [
+    UserStore,
+    DateService,
+    CalendarService,
+    stateAndDispatcher
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

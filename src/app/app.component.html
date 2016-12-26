@@ -1,4 +1,7 @@
 <div class="container-fluid">
-    <app-calendar-form #calendarForm (generateCells)="generateCells(calendarForm.month)"></app-calendar-form>
+    <div class="row">
+        <app-calendar-form #calendarForm (generateCells)="generateCells(calendarForm.month)"></app-calendar-form>
+        <app-calendar-requirements-form></app-calendar-requirements-form>
+    </div>
     <app-calendar [calendar]="calendar"></app-calendar>
 </div>
