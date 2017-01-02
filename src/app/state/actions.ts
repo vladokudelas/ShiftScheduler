@@ -1,11 +1,12 @@
 import * as moment from 'moment';
 
-import { RequirementType, WorkUser } from '../model';
+import { RequirementType, WorkUser, Priority } from '../model';
 
 export enum ActionType {
     Empty = 0,
     GenerateCalendar = 1,
-    AddRequirement = 2
+    AddRequirement = 2,
+    RemoveRequirement = 3
 }
 
 export class BaseAction {
@@ -28,13 +29,20 @@ export class AddRequirementAction extends BaseAction {
     constructor(
         public date: moment.Moment,
         public workUser: WorkUser,
-        public priority: number,
+        public priority: Priority,
         public requirementType: RequirementType
     ) {
         super(ActionType.AddRequirement);
     }
 }
 
+export class RemoveRequirementAction extends BaseAction {
+    constructor(public id: number) {
+        super(ActionType.RemoveRequirement);
+    }
+}
+
 export type Action = GenerateCalendarAction
     | EmptyAction
-    | AddRequirementAction;
+    | AddRequirementAction
+    | RemoveRequirementAction;

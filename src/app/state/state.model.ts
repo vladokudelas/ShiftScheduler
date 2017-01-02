@@ -4,10 +4,10 @@ import { CalendarCell, Requirement } from '../model';
 
 export const initAppState = <AppState>{
     calendar: [],
-    requirements: []
+    requirements: null
 };
 
 export interface AppState {
     calendar: CalendarCell[];
-    requirements: Requirement[];
+    requirements: List<Requirement>;
 }

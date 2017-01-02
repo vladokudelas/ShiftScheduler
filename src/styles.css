@@ -3,3 +3,7 @@
 body {
     padding-top: 50px;
 }
+
+.datatable-header {
+    font-size: 22px;
+}

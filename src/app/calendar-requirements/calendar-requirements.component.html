@@ -2,7 +2,22 @@
     <div class="card">
         <div class="card-block">
             <h4 class="card-title">Poziadavky zoznam</h4>
-            <ngx-datatable [columnMode]="'force'" [rows]="rows" [columns]="columns" [rowHeight]="'auto'" [headerHeight]="50" [footerHeight]="50">
+            <ngx-datatable [rows]="rows" [rowHeight]="'auto'" [headerHeight]="50" [footerHeight]="50">
+                <ngx-datatable-column name="" width="30">
+                    <template let-row="row" ngx-datatable-cell-template>
+                        <button type="button" class="close" style="float: left;" aria-label="close" (click)="removeRequirement(row.id)">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Den" prop="dateDisplay"  [draggable]="false" width="100">
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Osoba" prop="workUser.name" [draggable]="false" width="100">
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Priorita" prop="priority.display"  [draggable]="false" width="100">
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Type" prop="requirementType.display" [draggable]="false" width="70">
+                </ngx-datatable-column>
             </ngx-datatable>
         </div>
     </div>

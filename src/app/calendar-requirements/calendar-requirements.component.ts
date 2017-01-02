@@ -1,7 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Observer } from 'rxjs';
 
-import { AppState, stateToken } from '../state';
+import { AppState, stateToken, dispatcherToken, Action, RemoveRequirementAction } from '../state';
+import { Requirement } from '../model';
 
 @Component({
   selector: 'app-calendar-requirements',
@@ -10,34 +11,21 @@ import { AppState, stateToken } from '../state';
 })
 export class CalendarRequirementsComponent implements OnInit {
 
-  public rows: Array<any> = [];
-
-  public columns: Array<any> = [
-    { title: '', name: 'del' },
-    { title: 'Den', name: 'dateDisplay', sorting: true },
-    { title: 'Osoba', name: 'workUser.name' },
-    { title: 'Priorita', name: 'priority' },
-    { title: 'Type.', name: 'requirementType.display' }
-  ];
-
-  public config: any = {
-    paging: false,
-    sorting: { columns: this.columns },
-    filtering: { filterString: '', columnName: 'position' }
-  };
+  public rows: Array<Requirement> = [];
 
   constructor(
-    @Inject(stateToken) private state: Observable<AppState>
+    @Inject(stateToken) private state: Observable<AppState>,
+    @Inject(dispatcherToken) private dispatcher: Observer<Action>
   ) {
   }
 
   ngOnInit() {
     this.state.subscribe(s => {
-      this.rows = s.requirements;
+      this.rows = s.requirements.toArray();
     });
   }
 
-  public onCellClick(event) {
-    let tmp = event;
+  public removeRequirement(id: number) {
+    this.dispatcher.next(new RemoveRequirementAction(id));
   }
 }

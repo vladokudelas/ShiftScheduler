@@ -48,6 +48,8 @@ export function stateFactory(
     return wrapIntoBehavior(initialState, appStateObs);
 }
 
+var requirementsIdCounter: number = 1;
+
 function reduceState(
     initialState: any,
     actions: Observable<Action>,
@@ -56,7 +58,7 @@ function reduceState(
     return actions.scan((state: AppState, action: Action) => {
 
         if (!state.requirements) {
-            state.requirements = [];
+            state.requirements = List<Requirement>();
         }
 
         switch (action.type) {
@@ -65,12 +67,20 @@ function reduceState(
                 break;
             case ActionType.AddRequirement:
                 let a = <Actions.AddRequirementAction>action;
-                state.requirements.push(new Requirement(<IRequirement>{
+                state.requirements = state.requirements.push(new Requirement(<IRequirement>{
+                    id: requirementsIdCounter++,
                     date: a.date,
                     priority: a.priority,
                     workUser: a.workUser,
                     requirementType: a.requirementType
                 }));
+                break;
+            case ActionType.RemoveRequirement:
+                let reqIdxToRemove = state.requirements.findIndex(r => r.id == (<Actions.RemoveRequirementAction>action).id);
+                if (reqIdxToRemove >= 0) {
+                    state.requirements = state.requirements.remove(reqIdxToRemove);
+                }
+                break;
         }
 
         return state;

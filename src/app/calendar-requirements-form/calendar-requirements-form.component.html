@@ -21,11 +21,8 @@
                 <div class="form-group row">
                     <label for="priority" class="col-xs-3 col-form-label">Priorita</label>
                     <div class="col-xs-9">
-                        <select required class="form-control" id="priority" [(ngModel)]="priority" name="priority">
-                            <option selected value="0"> -- select -- </option>
-                            <option value="1">Low</option>
-                            <option value="2">Medium</option>
-                            <option value="3">High</option>
+                        <select required class="form-control" id="priority" [ngModel]="priority.value" (ngModelChange)="setPriorityType($event)" name="priority">
+                            <option *ngFor="let p of _priorities; let isFirst = first" [selected]="isFirst" [value]="p.value">{{p.display}}</option>
                         </select>
                     </div>
                 </div>

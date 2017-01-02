@@ -3,24 +3,28 @@ import * as moment from 'moment';
 
 import { WorkUser } from './work-user';
 import { RequirementType, requirementTypes } from './requirement-type';
+import { Priority, lowPriority } from './priority';
 
 export interface IRequirement {
+    id: number,
     date: moment.Moment;
-    priority: number;
+    priority: Priority;
     workUser: WorkUser;
     requirementType: RequirementType;
 }
 
 const RequirementRecord = Record(<IRequirement>{
+    id: 0,
     date: undefined,
-    priority: 0,
+    priority: lowPriority,
     workUser: undefined,
     requirementType: requirementTypes[0]
 });
 
 export class Requirement extends RequirementRecord implements IRequirement {
+    id: number;
     date: moment.Moment;
-    priority: number;
+    priority: Priority;
     workUser: WorkUser;
     requirementType: RequirementType;
 
@@ -30,22 +34,5 @@ export class Requirement extends RequirementRecord implements IRequirement {
 
     public get dateDisplay(): string {
         return this.date.format('DD.MM.YYYY');
-    }
-
-    public get priorityDisplay(): string {
-        switch (this.priority) {
-            case 1:
-                return 'Low';
-            case 2:
-                return 'Medium';
-            case 3:
-                return 'High';
-        }
-
-        return 'Unknown';
-    }
-
-    public get del(): string {
-        return 'Remove';
     }
 }
