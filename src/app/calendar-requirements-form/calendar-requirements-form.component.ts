@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { List } from 'immutable';
 import { Observer } from 'rxjs';
+import * as moment from 'moment';
 
 import { UserStore } from '../service';
 import { WorkUser, requirementTypes, RequirementType } from '../model';
@@ -48,7 +49,7 @@ export class CalendarRequirementsFormComponent implements OnInit {
   }
 
   public addRequirement() {
-    this.dispatcher.next(new AddRequirementAction(this.date, this.workUser, this.priority, this.requirementType));
+    this.dispatcher.next(new AddRequirementAction(moment(this.date), this.workUser, this.priority, this.requirementType));
     this.reset();
   }
 

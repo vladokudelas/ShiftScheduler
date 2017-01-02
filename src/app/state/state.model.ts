@@ -1,11 +1,13 @@
 import { List } from 'immutable';
 
-import { CalendarCell } from '../model';
+import { CalendarCell, Requirement } from '../model';
 
 export const initAppState = <AppState>{
-    calendar: []
+    calendar: [],
+    requirements: []
 };
 
 export interface AppState {
     calendar: CalendarCell[];
+    requirements: Requirement[];
 }

@@ -13,6 +13,9 @@ import { CalendarHoursComponent } from './calendar-hours/calendar-hours.componen
 import { UserStore, DateService, CalendarService } from './service';
 import { stateAndDispatcher } from './state/state';
 import { CalendarRequirementsFormComponent } from './calendar-requirements-form/calendar-requirements-form.component';
+import { CalendarRequirementsComponent } from './calendar-requirements/calendar-requirements.component';
+
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 @NgModule({
   declarations: [
@@ -22,12 +25,14 @@ import { CalendarRequirementsFormComponent } from './calendar-requirements-form/
     CalendarCellComponent,
     CalendarCellDayComponent,
     CalendarHoursComponent,
-    CalendarRequirementsFormComponent
+    CalendarRequirementsFormComponent,
+    CalendarRequirementsComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    NgxDatatableModule
   ],
   providers: [
     UserStore,

@@ -18,6 +18,7 @@
         "mobile": false,
         "styles": [
             "../node_modules/bootstrap/dist/css/bootstrap-flex.css",
+            "../node_modules/@swimlane/ngx-datatable/release/datatable.css",
             "styles.css"
         ],
         "scripts": [
