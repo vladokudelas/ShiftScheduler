@@ -1,12 +1,14 @@
-<div *ngIf="!isEmpty">
-    <div class="row">
-        <div *ngFor="let d of days">
-            <app-calendar-cell-day [day]="d"></app-calendar-cell-day>
+<div class="col-xs">
+    <div *ngIf="!isEmpty">
+        <div class="row">
+            <div *ngFor="let d of days">
+                <app-calendar-cell-day [day]="d"></app-calendar-cell-day>
+            </div>
         </div>
-    </div>
-    <div class="row" *ngFor="let week of calendar">
-        <div *ngFor="let day of week">
-            <app-calendar-cell [day]="day" [requirements]="requirements"></app-calendar-cell>
+        <div class="row" *ngFor="let week of calendar">
+            <div *ngFor="let day of week">
+                <app-calendar-cell [day]="day" [requirements]="requirements"></app-calendar-cell>
+            </div>
         </div>
     </div>
 </div>
