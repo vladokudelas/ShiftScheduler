@@ -6,7 +6,7 @@
     </div>
     <div class="row" *ngFor="let week of calendar">
         <div *ngFor="let day of week">
-            <app-calendar-cell [day]="day"></app-calendar-cell>
+            <app-calendar-cell [day]="day" [requirements]="requirements"></app-calendar-cell>
         </div>
     </div>
 </div>

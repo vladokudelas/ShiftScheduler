@@ -8,7 +8,11 @@ import { Component, OnInit, Input } from '@angular/core';
 export class CalendarComponent implements OnInit {
 
   @Input()
+  private requirements;
+
+  @Input()
   public calendar = [];
+
   public days = ['Pondelok', 'Utorok', 'Streda', 'Stvrtok', 'Piatok', 'Sobota', 'Nedela'];
 
   public get isEmpty(): boolean {

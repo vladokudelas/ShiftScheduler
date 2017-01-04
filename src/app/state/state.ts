@@ -64,6 +64,8 @@ function reduceState(
         switch (action.type) {
             case ActionType.GenerateCalendar:
                 state.calendar = calendarService.generateCalendar((action as Actions.GenerateCalendarAction).month);
+                let requirements = calendarService.generateAutoRequirements(state.calendar, {id: requirementsIdCounter});
+                state.requirements = state.requirements.concat(requirements).toList();
                 break;
             case ActionType.AddRequirement:
                 let a = <Actions.AddRequirementAction>action;

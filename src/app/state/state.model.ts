@@ -8,6 +8,6 @@ export const initAppState = <AppState>{
 };
 
 export interface AppState {
-    calendar: CalendarCell[];
+    calendar: CalendarCell[][];
     requirements: List<Requirement>;
 }

@@ -1,16 +1,22 @@
+import { worker } from 'cluster';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
+import { Observer } from 'rxjs';
 
-import { CalendarCell } from '../model';
+import { CalendarCell, highPriority, vacationReqType, Requirement, IRequirement } from '../model';
 import { DateService } from './date.service';
+import { UserStore, workUserMarianaId } from './user.store';
+import { Action, AddRequirementAction } from '../state';
 
 @Injectable()
 export class CalendarService {
 
-  constructor(private dateService: DateService) {
+  constructor(
+    private dateService: DateService,
+    private userStore: UserStore) {
   }
 
-  public generateCalendar(month: moment.Moment): CalendarCell[] {
+  public generateCalendar(month: moment.Moment): CalendarCell[][] {
     let fridayBefore = moment(month).add(-month.day() + 1 - 3, 'day');
 
     let result = [];
@@ -39,6 +45,26 @@ export class CalendarService {
     }
 
     console.log(JSON.stringify(result, null, 2));
+    return result;
+  }
+
+  public generateAutoRequirements(calendar: CalendarCell[][], idHolder: any): Requirement[] {
+    let result: Requirement[] = [];
+    for (let week of calendar) {
+      for (let day of week) {
+        if (day.date.weekday() === 0 || day.date.weekday() === 1) {
+
+          result.push(new Requirement(<IRequirement>{
+            id: idHolder.id++,
+            date: day.date,
+            workUser: this.userStore.getById(workUserMarianaId),
+            priority: highPriority,
+            requirementType: vacationReqType
+          }));
+        }
+      }
+    }
+
     return result;
   }
 }

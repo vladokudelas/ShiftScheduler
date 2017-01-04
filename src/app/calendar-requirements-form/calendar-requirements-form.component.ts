@@ -45,8 +45,10 @@ export class CalendarRequirementsFormComponent implements OnInit {
   public setRequirementType(typeValue: string) {
     if (typeValue === '1') {
       this.requirementType = requirementTypes[0];
-    } else {
+    } else if (typeValue === '2') {
       this.requirementType = requirementTypes[1];
+    } else {
+      this.requirementType = requirementTypes[2];
     }
   }
 

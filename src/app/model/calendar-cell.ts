@@ -1,6 +1,7 @@
 import * as moment from 'moment';
 
 import { DateService } from '../service/date.service';
+import { WorkUser } from './work-user';
 
 export class CalendarCell {
 
@@ -15,6 +16,7 @@ export class CalendarCell {
     public isWeekend: boolean = false;
     public isHoliday: boolean = false;
     public shiftHours: number = 0;
+    public workUser: WorkUser = null;
 
     constructor(
         public day: number,
