@@ -1,3 +1,4 @@
+import { UserStore } from '../service/user.store';
 import { OpaqueToken } from '@angular/core';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { List } from 'immutable';
@@ -25,7 +26,7 @@ export const stateAndDispatcher = [
     {
         provide: stateToken,
         useFactory: stateFactory,
-        deps: [initStateToken, dispatcherToken, CalendarService]
+        deps: [initStateToken, dispatcherToken, CalendarService, UserStore]
     }
 ];
 
@@ -42,9 +43,10 @@ function wrapIntoBehavior(init, obs) {
 export function stateFactory(
     initialState: AppState,
     actions: Observable<Action>,
-    calendarService: CalendarService): Observable<AppState> {
+    calendarService: CalendarService,
+    userStore: UserStore): Observable<AppState> {
 
-    const appStateObs: Observable<AppState> = reduceState(initialState, actions, calendarService).share();
+    const appStateObs: Observable<AppState> = reduceState(initialState, actions, calendarService, userStore).share();
     return wrapIntoBehavior(initialState, appStateObs);
 }
 
@@ -53,7 +55,8 @@ var requirementsIdCounter: number = 1;
 function reduceState(
     initialState: any,
     actions: Observable<Action>,
-    calendarService: CalendarService): Observable<AppState> {
+    calendarService: CalendarService,
+    userStore: UserStore): Observable<AppState> {
 
     return actions.scan((state: AppState, action: Action) => {
 
@@ -64,7 +67,7 @@ function reduceState(
         switch (action.type) {
             case ActionType.GenerateCalendar:
                 state.calendar = calendarService.generateCalendar((action as Actions.GenerateCalendarAction).month);
-                let requirements = calendarService.generateAutoRequirements(state.calendar, {id: requirementsIdCounter});
+                let requirements = calendarService.generateAutoRequirements(state.calendar, { id: requirementsIdCounter });
                 state.requirements = state.requirements.concat(requirements).toList();
                 break;
             case ActionType.AddRequirement:
@@ -83,7 +86,20 @@ function reduceState(
                     state.requirements = state.requirements.remove(reqIdxToRemove);
                 }
                 break;
+            case ActionType.ChangeWorkUser:
+                let cwua = <Actions.ChangeWorkUserAction>action;
+                if (cwua.workUserId > 0) {
+                    cwua.cell.workUser = userStore.getById(cwua.workUserId);
+                } else {
+                    cwua.cell.workUser = undefined;
+                }
+                break;
+            case ActionType.ChangeShiftHours:
+                let csha = <Actions.ChangeShiftHoursAction>action;
+                csha.cell.shiftHours = csha.shiftHours;
+                break;
         }
+        state.hourInfo = calendarService.calculateHours(state.calendar, state.requirements);
 
         return state;
     });

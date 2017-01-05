@@ -1,7 +1,9 @@
-import { worker } from 'cluster';
+import { HourInfo } from '../model/hour-info';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { Observer } from 'rxjs';
+import { List } from 'immutable';
+
 
 import { CalendarCell, highPriority, vacationReqType, Requirement, IRequirement } from '../model';
 import { DateService } from './date.service';
@@ -64,6 +66,29 @@ export class CalendarService {
         }
       }
     }
+
+    return result;
+  }
+
+  public calculateHours(calendar: CalendarCell[][], requirements: List<Requirement>): HourInfo[] {
+    let result: HourInfo[] = [];
+    this.userStore.getWorkers().forEach(w => {
+
+      let hours = 0;
+      calendar.forEach(week => week.forEach(d => {
+        if (d.workUser && d.workUser.id && d.workUser.id === w.id) {
+          hours += d.shiftHours
+        }
+      }));
+      let vacationDays = 0;
+      requirements.forEach(r => {
+        if (r.workUser && r.workUser.id === w.id) {
+          vacationDays += 1;
+        }
+      })
+
+      result.push(new HourInfo(w, hours, vacationDays));
+    });
 
     return result;
   }

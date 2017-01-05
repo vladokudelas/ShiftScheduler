@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   title = 'app works!';
 
   public calendar = [];
+  public hourInfo = [];
   public requirements = List<Requirement>();
 
   constructor(
@@ -30,6 +31,7 @@ export class AppComponent implements OnInit {
     this.state.subscribe(s => {
       this.calendar = s.calendar;
       this.requirements = s.requirements;
+      this.hourInfo = s.hourInfo;
     });
     this.dispatcher.next(new Actions.EmptyAction());
   }

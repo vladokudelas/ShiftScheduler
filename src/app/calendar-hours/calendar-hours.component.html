@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-block">
       <h4 class="card-title">Hodiny</h4>
-      <ngx-datatable [rows]="rows" [rowHeight]="'auto'" [headerHeight]="50" [footerHeight]="50">
+      <ngx-datatable [rows]="hourInfo" [rowHeight]="'auto'" [headerHeight]="50" [footerHeight]="50">
         <ngx-datatable-column name="Osoba" prop="workUser.name" [draggable]="false" width="100">
         </ngx-datatable-column>
         <ngx-datatable-column name="Hodiny" prop="hours" [draggable]="false">

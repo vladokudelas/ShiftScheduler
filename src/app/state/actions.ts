@@ -1,12 +1,14 @@
 import * as moment from 'moment';
 
-import { RequirementType, WorkUser, Priority } from '../model';
+import { RequirementType, WorkUser, Priority, CalendarCell } from '../model';
 
 export enum ActionType {
     Empty = 0,
     GenerateCalendar = 1,
     AddRequirement = 2,
-    RemoveRequirement = 3
+    RemoveRequirement = 3,
+    ChangeWorkUser = 4,
+    ChangeShiftHours = 5
 }
 
 export class BaseAction {
@@ -42,7 +44,21 @@ export class RemoveRequirementAction extends BaseAction {
     }
 }
 
+export class ChangeWorkUserAction extends BaseAction {
+    constructor(public cell: CalendarCell, public workUserId: number) {
+        super(ActionType.ChangeWorkUser);
+    }
+}
+
+export class ChangeShiftHoursAction extends BaseAction {
+    constructor(public cell: CalendarCell, public shiftHours: number) {
+        super(ActionType.ChangeShiftHours);
+    }
+}
+
 export type Action = GenerateCalendarAction
     | EmptyAction
     | AddRequirementAction
-    | RemoveRequirementAction;
+    | RemoveRequirementAction
+    | ChangeWorkUserAction
+    | ChangeShiftHoursAction;

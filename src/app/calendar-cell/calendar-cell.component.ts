@@ -1,4 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Action, ChangeShiftHoursAction, ChangeWorkUserAction } from '../state/actions';
+import { Observer } from 'rxjs/Rx';
+import { dispatcherToken } from '../state';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { List } from 'immutable';
 import * as moment from 'moment';
 
@@ -24,7 +27,8 @@ export class CalendarCellComponent implements OnInit {
 
   constructor(
     public userStore: UserStore,
-    public dateService: DateService) {
+    public dateService: DateService,
+    @Inject(dispatcherToken) private dispatcher: Observer<Action>) {
   }
 
   public ngOnInit() {
@@ -42,10 +46,11 @@ export class CalendarCellComponent implements OnInit {
 
   public setWorkUser(workUserIdStr: string) {
     let workUserId = Number(workUserIdStr);
-    if (workUserId > 0) {
-      this.day.workUser = this.userStore.getById(workUserId);
-    } else {
-      this.day.workUser = undefined;
-    }
+    this.dispatcher.next(new ChangeWorkUserAction(this.day, workUserId));
+  }
+
+  public setShiftHours(shiftHoursStr: string) {
+    let shiftHours = Number(shiftHoursStr);
+    this.dispatcher.next(new ChangeShiftHoursAction(this.day, shiftHours));
   }
 }

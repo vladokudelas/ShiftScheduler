@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { UserStore } from '../service';
 
@@ -7,22 +7,13 @@ import { UserStore } from '../service';
   templateUrl: './calendar-hours.component.html',
   styleUrls: ['./calendar-hours.component.css']
 })
-export class CalendarHoursComponent implements OnInit {
+export class CalendarHoursComponent {
 
-  public rows = [];
+  @Input()
+  public hourInfo = [];
 
   constructor(
     public userStore: UserStore
   ) {
-  }
-
-  ngOnInit() {
-    this.userStore.getWorkers().forEach(w => {
-      this.rows.push({
-        workUser: w,
-        hours: 0,
-        vacationDays: 0
-      });
-    });
   }
 }
