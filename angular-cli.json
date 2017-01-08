@@ -17,7 +17,7 @@
         "prefix": "app",
         "mobile": false,
         "styles": [
-            "../node_modules/bootstrap/dist/css/bootstrap-flex.css",
+            "../node_modules/bootstrap/dist/css/bootstrap.css",
             "../node_modules/@swimlane/ngx-datatable/release/datatable.css",
             "../node_modules/@swimlane/ngx-datatable/release/material.css",
             "../node_modules/@swimlane/ngx-datatable/release/assets/icons.css",
