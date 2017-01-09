@@ -100,7 +100,7 @@ function reduceState(
                 csha.cell.shiftHours = csha.shiftHours;
                 break;
         }
-        state.hourInfo = calendarService.calculateHours(state.calendar, state.requirements);
+        state.hourInfo = calendarService.calculateHours(state.selectedMonth, state.calendar, state.requirements);
 
         return state;
     });

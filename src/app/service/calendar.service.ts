@@ -70,19 +70,19 @@ export class CalendarService {
     return result;
   }
 
-  public calculateHours(calendar: CalendarCell[][], requirements: List<Requirement>): HourInfo[] {
+  public calculateHours(selectedMonth: moment.Moment, calendar: CalendarCell[][], requirements: List<Requirement>): HourInfo[] {
     let result: HourInfo[] = [];
     this.userStore.getWorkers().forEach(w => {
 
       let hours = 0;
       calendar.forEach(week => week.forEach(d => {
-        if (d.workUser && d.workUser.id && d.workUser.id === w.id) {
+        if (d.workUser && d.workUser.id && d.workUser.id === w.id && selectedMonth.month() === d.date.month()) {
           hours += d.shiftHours
         }
       }));
       let vacationDays = 0;
       requirements.forEach(r => {
-        if (r.workUser && r.workUser.id === w.id) {
+        if (r.workUser && r.workUser.id === w.id && (!selectedMonth || selectedMonth.month() === r.date.month())) {
           vacationDays += 1;
         }
       })

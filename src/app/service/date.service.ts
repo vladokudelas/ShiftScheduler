@@ -37,9 +37,25 @@ export class DateService {
 
   // tyzden 17.5
   // piatok 15.5
-  // sobota 26
-  // nedela 27
+  // sobota 28
+  // nedela 26
   public getShiftHours(date: moment.Moment): number {
-    return 2;
+    // let isFriday = date.weekday() === 5;
+    // let tomorrow = moment(date).add(1, 'day');
+    // let isHolidayToday = this.isHoliday(date);
+    // let isHolidayTomorrow = this.isHoliday(tomorrow);
+    // let isWeekendToday = this.isWeekend(date);
+    // let isWeekendTomorrow = this.isWeekend(tomorrow);
+
+    switch (date.weekday()) {
+      case 5: //Friday
+        return 15.5;
+      case 6: //Saturday
+        return 28;
+      case 0: //Sunday
+        return 26;
+      default:
+        return 17.5; //workday
+    }
   }
 }
