@@ -50,11 +50,11 @@ export class CalendarService {
     return result;
   }
 
-  public generateAutoRequirements(calendar: CalendarCell[][], idHolder: any): Requirement[] {
+  public generateAutoRequirements(selectedMonth: moment.Moment, calendar: CalendarCell[][], idHolder: any): Requirement[] {
     let result: Requirement[] = [];
     for (let week of calendar) {
       for (let day of week) {
-        if (day.date.weekday() === 0 || day.date.weekday() === 1) {
+        if (selectedMonth && day.date.month() === selectedMonth.month() && (day.date.weekday() === 0 || day.date.weekday() === 1)) {
 
           result.push(new Requirement(<IRequirement>{
             id: idHolder.id++,

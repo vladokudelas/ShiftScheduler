@@ -12,7 +12,7 @@ export class UserStore {
 
   constructor() {
     this.workers = List([
-      new WorkUser({ id: 1, name: 'Kacenka' }),
+      new WorkUser({ id: 1, name: 'Katka' }),
       new WorkUser({ id: 2, name: 'Matej' }),
       new WorkUser({ id: 3, name: 'David' }),
       new WorkUser({ id: workUserMarianaId, name: 'Mariana' }),

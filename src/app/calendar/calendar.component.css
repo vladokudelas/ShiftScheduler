@@ -1,3 +1,7 @@
 .weekday {
     width: 7.5em;
 }
+
+.calendar {
+    margin: 20px;
+}

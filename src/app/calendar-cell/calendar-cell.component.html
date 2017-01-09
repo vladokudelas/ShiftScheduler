@@ -1,6 +1,6 @@
-<div class="card col-xs calendar-cell" [ngClass]="(day.isWeekend ? 'weekend' : '') + ' ' + (day.isHoliday ? 'holiday' : '')">
+<div class="card col calendar-cell" [ngClass]="(day.isWeekend ? 'weekend' : '') + ' ' + (day.isHoliday ? 'holiday' : '')">
     <div class="card-block">
-        <div class="text-xs-center">{{day.dateString}}</div>
+        <div class="text-center">{{day.dateString}}</div>
         <form class="form-horizontal">
             <div class="form-group row">
                 <fieldset [disabled]="!day.isEditable">
@@ -11,7 +11,7 @@
                 </fieldset>
             </div>
             <div class="form-group row">
-                <input type="number" class="calendar-cell-hours text-xs-center" name="shiftHours" [ngModel]="day.shiftHours" (ngModelChange)="setShiftHours($event)">
+                <input type="number" class="calendar-cell-hours text-center" name="shiftHours" [ngModel]="day.shiftHours" (ngModelChange)="setShiftHours($event)">
             </div>
         </form>
     </div>
