@@ -4,7 +4,7 @@
         <form class="form-horizontal">
             <div class="form-group row">
                 <fieldset [disabled]="!day.isEditable">
-                    <select required class="form-control" id="workUser" name="workUser" [ngModel]="workUser ? workUser.id : 0" (ngModelChange)="setWorkUser($event)">
+                    <select required class="form-control" id="workUser" name="workUser" [ngModel]="day.workUser ? day.workUser.id : 0" (ngModelChange)="setWorkUser($event)">
                         <option value="0"> -- select -- </option>
                         <option *ngFor="let workUser of workUsers" [value]="workUser.id">{{workUser.name}}</option>
                     </select>

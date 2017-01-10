@@ -8,15 +8,15 @@ import { Component, OnInit, Input } from '@angular/core';
 export class CalendarComponent implements OnInit {
 
   @Input()
-  private requirements;
+  public requirements;
 
   @Input()
-  public calendar = [];
+  public calendar = null;
 
   public days = ['Pondelok', 'Utorok', 'Streda', 'Stvrtok', 'Piatok', 'Sobota', 'Nedela'];
 
   public get isEmpty(): boolean {
-    return !this.calendar || this.calendar.length === 0;
+    return !this.calendar || this.calendar.calendar.length === 0;
   }
 
   constructor() { }

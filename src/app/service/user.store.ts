@@ -3,7 +3,7 @@ import { List } from 'immutable';
 
 import { WorkUser } from '../model/work-user';
 
-export var workUserMarianaId: number = 4;
+export let workUserMarianaId = 4;
 
 @Injectable()
 export class UserStore {

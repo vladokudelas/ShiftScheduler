@@ -2,6 +2,7 @@ import * as moment from 'moment';
 
 import { DateService } from '../service/date.service';
 import { WorkUser } from './work-user';
+import { Weekdays } from './weekdays';
 
 export class CalendarCell {
 
@@ -9,11 +10,30 @@ export class CalendarCell {
         return this.date.format('D.M.YYYY');
     }
 
-    public get isEditable(): boolean {
-        return this.day !== undefined;
+    private get isDayDefined(): boolean {
+        return this.day !== undefined && this.day !== null;
     }
 
-    public isWeekend: boolean = false;
+    public get isEditable(): boolean {
+        return this.isDayDefined;
+    }
+
+    public get isFriday(): boolean {
+        return this.isDayDefined && this.day === Weekdays.Friday;
+    }
+
+    public get isSunday(): boolean {
+        return this.isDayDefined && this.day === Weekdays.Sunday;
+    }
+
+    public get isWeekend(): boolean {
+        return this.isDayDefined && (this.day === Weekdays.Saturday || this.day === Weekdays.Sunday);
+    }
+
+    public get isWorkUserAssigned(): boolean {
+        return !!this.workUser;
+    }
+
     public isHoliday: boolean = false;
     public shiftHours: number = 0;
     public workUser: WorkUser = null;
@@ -24,7 +44,6 @@ export class CalendarCell {
         dateService?: DateService) {
 
         if (dateService) {
-            this.isWeekend = dateService.isWeekend(date);
             this.isHoliday = dateService.isHoliday(date);
             this.shiftHours = dateService.getShiftHours(date);
         }

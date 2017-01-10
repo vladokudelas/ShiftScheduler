@@ -38,7 +38,7 @@ export class CalendarCellComponent implements OnInit {
       if (r.date.isSame(this.day.date, 'day')) {
         let idx = this.workUsers.findIndex(w => w.id === r.workUser.id);
         if (idx > 0) {
-          this.workUsers = this.workUsers.remove(idx)
+          this.workUsers = this.workUsers.remove(idx);
         }
       }
     });

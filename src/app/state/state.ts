@@ -1,4 +1,3 @@
-import { UserStore } from '../service/user.store';
 import { OpaqueToken } from '@angular/core';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { List } from 'immutable';
@@ -6,7 +5,7 @@ import { List } from 'immutable';
 import { Action, ActionType } from './actions';
 import * as Actions from './actions';
 import { AppState, initAppState } from './state.model';
-import { CalendarService } from '../service';
+import { CalendarService, UserStore, RulesService } from '../service';
 import { Requirement, IRequirement } from '../model';
 
 export const initStateToken = new OpaqueToken('initState');
@@ -26,7 +25,7 @@ export const stateAndDispatcher = [
     {
         provide: stateToken,
         useFactory: stateFactory,
-        deps: [initStateToken, dispatcherToken, CalendarService, UserStore]
+        deps: [initStateToken, dispatcherToken, CalendarService, UserStore, RulesService]
     }
 ];
 
@@ -44,19 +43,21 @@ export function stateFactory(
     initialState: AppState,
     actions: Observable<Action>,
     calendarService: CalendarService,
-    userStore: UserStore): Observable<AppState> {
+    userStore: UserStore,
+    ruleService: RulesService): Observable<AppState> {
 
-    const appStateObs: Observable<AppState> = reduceState(initialState, actions, calendarService, userStore).share();
+    const appStateObs: Observable<AppState> = reduceState(initialState, actions, calendarService, userStore, ruleService).share();
     return wrapIntoBehavior(initialState, appStateObs);
 }
 
-var requirementsIdCounter: number = 1;
+let requirementsIdCounter = 1;
 
 function reduceState(
     initialState: any,
     actions: Observable<Action>,
     calendarService: CalendarService,
-    userStore: UserStore): Observable<AppState> {
+    userStore: UserStore,
+    ruleService: RulesService): Observable<AppState> {
 
     return actions.scan((state: AppState, action: Action) => {
 
@@ -82,18 +83,14 @@ function reduceState(
                 }));
                 break;
             case ActionType.RemoveRequirement:
-                let reqIdxToRemove = state.requirements.findIndex(r => r.id == (<Actions.RemoveRequirementAction>action).id);
+                let reqIdxToRemove = state.requirements.findIndex(r => r.id === (<Actions.RemoveRequirementAction>action).id);
                 if (reqIdxToRemove >= 0) {
                     state.requirements = state.requirements.remove(reqIdxToRemove);
                 }
                 break;
             case ActionType.ChangeWorkUser:
-                let cwua = <Actions.ChangeWorkUserAction>action;
-                if (cwua.workUserId > 0) {
-                    cwua.cell.workUser = userStore.getById(cwua.workUserId);
-                } else {
-                    cwua.cell.workUser = undefined;
-                }
+            let cwua = <Actions.ChangeWorkUserAction>action;
+                ruleService.setWorkUserToCell(cwua.workUserId, cwua.cell, state.calendar);
                 break;
             case ActionType.ChangeShiftHours:
                 let csha = <Actions.ChangeShiftHoursAction>action;

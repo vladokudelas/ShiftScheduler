@@ -23,14 +23,6 @@ export class DateService {
   constructor() {
   }
 
-  public isWeekendOrHoliday(date: moment.Moment): boolean {
-    return this.isWeekend(date) || this.isHoliday(date);
-  }
-
-  public isWeekend(date: moment.Moment): boolean {
-    return date.weekday() === 6 || date.weekday() === 0;
-  }
-
   public isHoliday(date: moment.Moment): boolean {
     return this.holidays.filter(h => h.isSame(date, 'day')).length > 0;
   }
@@ -48,14 +40,14 @@ export class DateService {
     // let isWeekendTomorrow = this.isWeekend(tomorrow);
 
     switch (date.weekday()) {
-      case 5: //Friday
+      case 5: // Friday
         return 15.5;
-      case 6: //Saturday
+      case 6: // Saturday
         return 28;
-      case 0: //Sunday
+      case 0: // Sunday
         return 26;
       default:
-        return 17.5; //workday
+        return 17.5; // workday
     }
   }
 }

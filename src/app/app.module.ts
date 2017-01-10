@@ -10,7 +10,7 @@ import { CalendarCellComponent } from './calendar-cell/calendar-cell.component';
 import { CalendarCellDayComponent } from './calendar-cell-day/calendar-cell-day.component';
 import { CalendarHoursComponent } from './calendar-hours/calendar-hours.component';
 
-import { UserStore, DateService, CalendarService } from './service';
+import { UserStore, DateService, CalendarService, RulesService } from './service';
 import { stateAndDispatcher } from './state/state';
 import { CalendarRequirementsFormComponent } from './calendar-requirements-form/calendar-requirements-form.component';
 import { CalendarRequirementsComponent } from './calendar-requirements/calendar-requirements.component';
@@ -38,6 +38,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     UserStore,
     DateService,
     CalendarService,
+    RulesService,
     stateAndDispatcher
   ],
   bootstrap: [AppComponent]

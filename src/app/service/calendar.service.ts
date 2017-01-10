@@ -5,7 +5,7 @@ import { Observer } from 'rxjs';
 import { List } from 'immutable';
 
 
-import { CalendarCell, highPriority, vacationReqType, Requirement, IRequirement } from '../model';
+import { CalendarCell, Calendar, highPriority, vacationReqType, Requirement, IRequirement, Weekdays } from '../model';
 import { DateService } from './date.service';
 import { UserStore, workUserMarianaId } from './user.store';
 import { Action, AddRequirementAction } from '../state';
@@ -18,7 +18,7 @@ export class CalendarService {
     private userStore: UserStore) {
   }
 
-  public generateCalendar(month: moment.Moment): CalendarCell[][] {
+  public generateCalendar(month: moment.Moment): Calendar {
     let fridayBefore = moment(month).add(-month.day() + 1 - 3, 'day');
 
     let result = [];
@@ -40,52 +40,54 @@ export class CalendarService {
       week.push(new CalendarCell(d.weekday(), moment(d), this.dateService));
       d.add(1, 'day');
 
-      if (d.weekday() === 1) {
+      if (d.weekday() === Weekdays.Monday) {
         week = [];
         result.push(week);
       }
     }
 
     console.log(JSON.stringify(result, null, 2));
-    return result;
+    return new Calendar(result);
   }
 
-  public generateAutoRequirements(selectedMonth: moment.Moment, calendar: CalendarCell[][], idHolder: any): Requirement[] {
+  public generateAutoRequirements(selectedMonth: moment.Moment, calendar: Calendar, idHolder: any): Requirement[] {
     let result: Requirement[] = [];
-    for (let week of calendar) {
-      for (let day of week) {
-        if (selectedMonth && day.date.month() === selectedMonth.month() && (day.date.weekday() === 0 || day.date.weekday() === 1)) {
+    calendar.getAllDays().forEach(d => {
+      if (selectedMonth && d.date.month() === selectedMonth.month() && d.isWeekend) {
 
-          result.push(new Requirement(<IRequirement>{
-            id: idHolder.id++,
-            date: day.date,
-            workUser: this.userStore.getById(workUserMarianaId),
-            priority: highPriority,
-            requirementType: vacationReqType
-          }));
-        }
+        result.push(new Requirement(<IRequirement>{
+          id: idHolder.id++,
+          date: d.date,
+          workUser: this.userStore.getById(workUserMarianaId),
+          priority: highPriority,
+          requirementType: vacationReqType
+        }));
       }
-    }
+    });
 
     return result;
   }
 
-  public calculateHours(selectedMonth: moment.Moment, calendar: CalendarCell[][], requirements: List<Requirement>): HourInfo[] {
+  public calculateHours(selectedMonth: moment.Moment, calendar: Calendar, requirements: List<Requirement>): HourInfo[] {
     let result: HourInfo[] = [];
     this.userStore.getWorkers().forEach(w => {
 
-      let hours = 0;
-      calendar.forEach(week => week.forEach(d => {
+      let days = calendar.getAllDays();
+      let hours = days.reduce((r, d) => {
         if (d.workUser && d.workUser.id && d.workUser.id === w.id && selectedMonth.month() === d.date.month()) {
-          hours += d.shiftHours
+          r += d.shiftHours;
         }
-      }));
-      let vacationDays = 0;
-      requirements.forEach(r => {
-        if (r.workUser && r.workUser.id === w.id && (!selectedMonth || selectedMonth.month() === r.date.month())) {
-          vacationDays += 1;
+
+        return r;
+      }, 0);
+
+      let vacationDays = requirements.reduce((res, req) => {
+        if (req.workUser && req.workUser.id === w.id && (!selectedMonth || selectedMonth.month() === req.date.month())) {
+          res += 1;
         }
-      })
+
+        return res;
+      }, 0);
 
       result.push(new HourInfo(w, hours, vacationDays));
     });

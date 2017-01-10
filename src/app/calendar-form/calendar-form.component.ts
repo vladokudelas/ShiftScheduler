@@ -9,7 +9,7 @@ export class CalendarFormComponent implements OnInit {
   public month: Date;
 
   @Output()
-  private generateCells = new EventEmitter<Date>();
+  public generateCells = new EventEmitter<Date>();
 
   constructor() { }
 

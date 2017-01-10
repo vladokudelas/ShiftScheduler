@@ -6,7 +6,7 @@ import { RequirementType, requirementTypes } from './requirement-type';
 import { Priority, lowPriority } from './priority';
 
 export interface IRequirement {
-    id: number,
+    id: number;
     date: moment.Moment;
     priority: Priority;
     workUser: WorkUser;
