@@ -69,6 +69,7 @@ function reduceState(
             case ActionType.GenerateCalendar:
                 state.selectedMonth = (action as Actions.GenerateCalendarAction).month;
                 state.calendar = calendarService.generateCalendar(state.selectedMonth);
+                ruleService.assignWorkUsersAccordingToRequirements(state.calendar, state.requirements);
                 let requirements = calendarService.generateAutoRequirements(state.selectedMonth, state.calendar, { id: requirementsIdCounter });
                 state.requirements = state.requirements.concat(requirements).toList();
                 break;
@@ -89,7 +90,7 @@ function reduceState(
                 }
                 break;
             case ActionType.ChangeWorkUser:
-            let cwua = <Actions.ChangeWorkUserAction>action;
+                let cwua = <Actions.ChangeWorkUserAction>action;
                 ruleService.setWorkUserToCell(cwua.workUserId, cwua.cell, state.calendar);
                 break;
             case ActionType.ChangeShiftHours:
@@ -97,7 +98,9 @@ function reduceState(
                 csha.cell.shiftHours = csha.shiftHours;
                 break;
         }
-        state.hourInfo = calendarService.calculateHours(state.selectedMonth, state.calendar, state.requirements);
+        if (state.calendar) {
+            state.hourInfo = calendarService.calculateHours(state.selectedMonth, state.calendar, state.requirements);
+        }
 
         return state;
     });

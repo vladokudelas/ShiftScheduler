@@ -34,6 +34,16 @@ export class CalendarCell {
         return !!this.workUser;
     }
 
+    public get backgroundCss(): any {
+        if (this.isDayDefined && this.isWorkUserAssigned) {
+            let result = {};
+            result[this.workUser.colorCss] = true;
+            return result;
+        }
+
+        return {};
+    }
+
     public isHoliday: boolean = false;
     public shiftHours: number = 0;
     public workUser: WorkUser = null;

@@ -8,7 +8,7 @@ import * as moment from 'moment';
 import { CalendarCell } from '../model/calendar-cell';
 
 import { UserStore, DateService } from '../service';
-import { WorkUser, Requirement } from '../model';
+import { WorkUser, Requirement, vacationReqType } from '../model';
 
 @Component({
   selector: 'app-calendar-cell',
@@ -35,7 +35,7 @@ export class CalendarCellComponent implements OnInit {
     this.workUsers = this.userStore.getWorkers();
 
     this.requirements.forEach(r => {
-      if (r.date.isSame(this.day.date, 'day')) {
+      if (r.requirementType.value === vacationReqType.value && r.date.isSame(this.day.date, 'day')) {
         let idx = this.workUsers.findIndex(w => w.id === r.workUser.id);
         if (idx > 0) {
           this.workUsers = this.workUsers.remove(idx);

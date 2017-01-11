@@ -12,12 +12,12 @@ export class UserStore {
 
   constructor() {
     this.workers = List([
-      new WorkUser({ id: 1, name: 'Katka' }),
-      new WorkUser({ id: 2, name: 'Matej' }),
-      new WorkUser({ id: 3, name: 'David' }),
-      new WorkUser({ id: workUserMarianaId, name: 'Mariana' }),
-      new WorkUser({ id: 5, name: 'Honza' }),
-      new WorkUser({ id: 6, name: 'Tomas' })
+      new WorkUser({ id: 1, name: 'Katka', colorCss: 'katka-bckg' }),
+      new WorkUser({ id: 2, name: 'Matej', colorCss: 'matej-bckg' }),
+      new WorkUser({ id: 3, name: 'David', colorCss: 'david-bckg' }),
+      new WorkUser({ id: workUserMarianaId, name: 'Mariana', colorCss: 'mariana-bckg' }),
+      new WorkUser({ id: 5, name: 'Honza', colorCss: 'honza-bckg' }),
+      new WorkUser({ id: 6, name: 'Tomas', colorCss: 'tomas-bckg' })
     ]);
   }
 

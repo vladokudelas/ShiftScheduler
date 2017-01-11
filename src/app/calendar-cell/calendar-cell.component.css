@@ -30,4 +30,31 @@
 select.form-control:not([size]):not([multiple]) {
     /*height: 1.5em;*/
     width: auto;
+    color: black;
+    font-weight: bold;
+}
+
+/* colors */
+.katka-bckg {
+    background: purple;
+}
+
+.matej-bckg {
+    background: lightblue;
+}
+
+.david-bckg {
+    background: green;
+}
+
+.mariana-bckg {
+    background: pink;
+}
+
+.honza-bckg {
+    background: yellow;
+}
+
+.tomas-bckg {
+    background: orange;
 }

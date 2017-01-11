@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
+import { List } from 'immutable';
 
 import { UserStore } from './user.store';
-import { CalendarCell, Calendar, Weekdays } from '../model';
+import { CalendarCell, Calendar, Weekdays, Requirement, workReqType } from '../model';
 
 @Injectable()
 export class RulesService {
@@ -37,6 +38,17 @@ export class RulesService {
     } else {
       cell.workUser = undefined;
     }
+  }
+
+  public assignWorkUsersAccordingToRequirements(calendar: Calendar, requirements: List<Requirement>) {
+    requirements.forEach(r => {
+      if (r.requirementType.value === workReqType.value) {
+        let day = calendar.getCellForDate(r.date);
+        if (day && day.isEditable) {
+          day.workUser = r.workUser;
+        }
+      }
+    });
   }
 
 }

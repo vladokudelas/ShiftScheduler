@@ -15,7 +15,7 @@ export class Calendar {
     public getCellForDate(date: moment.Moment): CalendarCell {
         let result = null;
         this.calendar.forEach(w => w.forEach(d => {
-            if (d.date.isSame(date)) {
+            if (d.date.isSame(date, 'day')) {
                 result = d;
             }
         }));

@@ -4,7 +4,7 @@ import { Observer, Observable } from 'rxjs';
 import * as moment from 'moment';
 import { List } from 'immutable';
 
-import { CalendarCell } from './model/calendar-cell';
+import { Calendar } from './model';
 import { dispatcherToken, stateToken, Action, AppState } from './state';
 import * as Actions from './state/actions';
 
@@ -17,7 +17,7 @@ import { requirementTypes, WorkUser, Requirement } from './model';
 export class AppComponent implements OnInit {
   title = 'app works!';
 
-  public calendar = [];
+  public calendar: Calendar = null;
   public hourInfo = [];
   public requirements = List<Requirement>();
 

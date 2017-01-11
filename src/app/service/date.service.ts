@@ -45,9 +45,9 @@ export class DateService {
       case 6: // Saturday
         return 28;
       case 0: // Sunday
-        return 26;
+        return 19.5;
       default:
-        return 17.5; // workday
+        return 11; // workday
     }
   }
 }
