@@ -5,3 +5,8 @@
 .calendar {
     margin: 20px;
 }
+
+.calendar-cell {
+    margin-left: 3px;
+    margin-right: 3px;
+}

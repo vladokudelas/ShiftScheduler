@@ -10,8 +10,8 @@
 }
 
 .card-block {
-    padding: 1% 4% 0% 1%;
-    width: 7.5em;
+    padding: 1% 7% 1% 1%;
+    width: 8em;
 }
 
 .calendar-cell {
@@ -19,19 +19,32 @@
 }
 
 .calendar-cell-hours {
-    width: 100%;
+    font-size: 10px;
+    max-width: 5em;
+    padding-left: 1px;
+    padding-right: 5px;
+}
+
+.calendar-cell-worker {
+    font-size: 15px;
+    width: auto;
+    color: black;
+    font-weight: bold;
+    margin-left: 15px;
+}
+
+.calendar-cell-date {
+    padding-right: 2px;
+    max-width: 6em;
+}
+
+.calendar-cell-requirements {
+    margin-left: 3px;
 }
 
 .weekend,
 .holiday {
     background: lightgray;
-}
-
-select.form-control:not([size]):not([multiple]) {
-    /*height: 1.5em;*/
-    width: auto;
-    color: black;
-    font-weight: bold;
 }
 
 /* colors */

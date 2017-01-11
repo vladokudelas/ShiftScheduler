@@ -9,6 +9,7 @@ import { CalendarCell } from '../model/calendar-cell';
 
 import { UserStore, DateService } from '../service';
 import { WorkUser, Requirement, vacationReqType } from '../model';
+import { RemoveRequirementAction } from '../state';
 
 @Component({
   selector: 'app-calendar-cell',
@@ -42,6 +43,10 @@ export class CalendarCellComponent implements OnInit {
         }
       }
     });
+  }
+
+  public removeRequirement(id: number) {
+    this.dispatcher.next(new RemoveRequirementAction(id));
   }
 
   public setWorkUser(workUserIdStr: string) {

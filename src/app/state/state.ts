@@ -72,6 +72,7 @@ function reduceState(
                 ruleService.assignWorkUsersAccordingToRequirements(state.calendar, state.requirements);
                 let requirements = calendarService.generateAutoRequirements(state.selectedMonth, state.calendar, { id: requirementsIdCounter }, state.requirements);
                 state.requirements = state.requirements.concat(requirements).toList();
+                state.calendar = calendarService.setRequirementsInCalendar(state.selectedMonth, state.calendar, state.requirements);
                 break;
             case ActionType.AddRequirement:
                 let a = <Actions.AddRequirementAction>action;
@@ -82,12 +83,14 @@ function reduceState(
                     workUser: a.workUser,
                     requirementType: a.requirementType
                 }));
+                state.calendar = calendarService.setRequirementsInCalendar(state.selectedMonth, state.calendar, state.requirements);
                 break;
             case ActionType.RemoveRequirement:
                 let reqIdxToRemove = state.requirements.findIndex(r => r.id === (<Actions.RemoveRequirementAction>action).id);
                 if (reqIdxToRemove >= 0) {
                     state.requirements = state.requirements.remove(reqIdxToRemove);
                 }
+                state.calendar = calendarService.setRequirementsInCalendar(state.selectedMonth, state.calendar, state.requirements);
                 break;
             case ActionType.ChangeWorkUser:
                 let cwua = <Actions.ChangeWorkUserAction>action;

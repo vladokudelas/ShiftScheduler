@@ -53,7 +53,8 @@ export class CalendarService {
   public generateAutoRequirements(selectedMonth: moment.Moment, calendar: Calendar, idHolder: any, existingRequirements: List<Requirement>): Requirement[] {
     let result: Requirement[] = [];
     calendar.getAllDays().forEach(d => {
-      if (selectedMonth && d.date.month() === selectedMonth.month() && d.isWeekend) {
+      // Rule for mariana Sunday and Monday free
+      if (selectedMonth && d.date.month() === selectedMonth.month() && (d.isSunday || d.day === Weekdays.Monday)) {
 
         let isFound = false;
         existingRequirements.forEach(r => {
@@ -100,5 +101,23 @@ export class CalendarService {
     });
 
     return result;
+  }
+
+  public setRequirementsInCalendar(selectedMonth: moment.Moment, calendar: Calendar, requirements: List<Requirement>): Calendar {
+    calendar.getAllDays().forEach(d => d.requirements = null);
+    let calendarMap = calendar.getMap();
+    requirements.forEach(r => {
+      if (r.date.month() === selectedMonth.month()) {
+        let dateStr = r.date.format(CalendarCell.DateStringFormat);
+        if (calendarMap.hasOwnProperty(dateStr)) {
+          calendarMap[dateStr].requirements = calendarMap[dateStr].requirements || [];
+          calendarMap[dateStr].requirements.push(r);
+        } else {
+          console.error(`Not found date in calendar for requirement ${dateStr}`);
+        }
+      }
+    });
+
+    return calendar;
   }
 }

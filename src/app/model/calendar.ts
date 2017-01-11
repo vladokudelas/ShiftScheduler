@@ -22,4 +22,13 @@ export class Calendar {
 
         return result;
     }
+
+    public getMap(): any {
+        let result = {};
+        this.calendar.forEach(w => w.forEach(d => {
+            result[d.dateString] = d;
+        }));
+
+        return result;
+    }
 }

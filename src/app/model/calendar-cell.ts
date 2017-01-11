@@ -3,8 +3,11 @@ import * as moment from 'moment';
 import { DateService } from '../service/date.service';
 import { WorkUser } from './work-user';
 import { Weekdays } from './weekdays';
+import { Requirement } from './requirement';
 
 export class CalendarCell {
+
+    public static DateStringFormat = 'D.M.YYYY';
 
     public get dateString(): string {
         return this.date.format('D.M.YYYY');
@@ -44,9 +47,32 @@ export class CalendarCell {
         return {};
     }
 
+    public get requirementsString(): string {
+        if (this.requirements) {
+            return this.requirements.reduce((res, req) => {
+                if (res.indexOf(req.workUser.shortcut) < 0) {
+                    if (res.length > 0) {
+                        res += ', ';
+                    }
+
+                    res += req.workUser.shortcut;
+                }
+
+                return res;
+            }, '');
+        }
+
+        return null;
+    }
+
+    public get requirementsHtml(): string {
+        return '<b>Test</b>';
+    }
+
     public isHoliday: boolean = false;
     public shiftHours: number = 0;
     public workUser: WorkUser = null;
+    public requirements: Requirement[] = null;
 
     constructor(
         public day: number,

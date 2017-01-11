@@ -7,3 +7,19 @@ body {
 .datatable-header {
     font-size: 22px;
 }
+
+.calendar-cell-day {
+    margin: 3px;
+    padding-left: 2%;
+    padding-right: 2%;
+    margin-bottom: 0.2%;
+}
+
+.calendar-cell-day>.card-block {
+    padding: 1% 7% 0% 1%;
+    width: 8em;
+}
+
+.popover-content {
+    width: 16em;
+}

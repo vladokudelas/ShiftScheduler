@@ -1,5 +1,5 @@
 import { highPriority, mediumPriority } from './model/priority';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, AfterContentInit  } from '@angular/core';
 import { Observer, Observable } from 'rxjs';
 import * as moment from 'moment';
 import { List } from 'immutable';

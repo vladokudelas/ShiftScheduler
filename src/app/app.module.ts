@@ -16,6 +16,7 @@ import { CalendarRequirementsFormComponent } from './calendar-requirements-form/
 import { CalendarRequirementsComponent } from './calendar-requirements/calendar-requirements.component';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { PopoverModule } from 'ng2-popover';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     BrowserModule,
     FormsModule,
     HttpModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    PopoverModule
   ],
   providers: [
     UserStore,
