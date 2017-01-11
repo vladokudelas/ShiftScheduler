@@ -70,7 +70,7 @@ function reduceState(
                 state.selectedMonth = (action as Actions.GenerateCalendarAction).month;
                 state.calendar = calendarService.generateCalendar(state.selectedMonth);
                 ruleService.assignWorkUsersAccordingToRequirements(state.calendar, state.requirements);
-                let requirements = calendarService.generateAutoRequirements(state.selectedMonth, state.calendar, { id: requirementsIdCounter });
+                let requirements = calendarService.generateAutoRequirements(state.selectedMonth, state.calendar, { id: requirementsIdCounter }, state.requirements);
                 state.requirements = state.requirements.concat(requirements).toList();
                 break;
             case ActionType.AddRequirement:

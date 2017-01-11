@@ -50,18 +50,25 @@ export class CalendarService {
     return new Calendar(result);
   }
 
-  public generateAutoRequirements(selectedMonth: moment.Moment, calendar: Calendar, idHolder: any): Requirement[] {
+  public generateAutoRequirements(selectedMonth: moment.Moment, calendar: Calendar, idHolder: any, existingRequirements: List<Requirement>): Requirement[] {
     let result: Requirement[] = [];
     calendar.getAllDays().forEach(d => {
       if (selectedMonth && d.date.month() === selectedMonth.month() && d.isWeekend) {
 
-        result.push(new Requirement(<IRequirement>{
-          id: idHolder.id++,
-          date: d.date,
-          workUser: this.userStore.getById(workUserMarianaId),
-          priority: highPriority,
-          requirementType: vacationReqType
-        }));
+        let isFound = false;
+        existingRequirements.forEach(r => {
+          isFound = isFound || (r.workUser.id === workUserMarianaId && r.date.isSame(d.date, 'day'))
+        });
+
+        if (!isFound) {
+          result.push(new Requirement(<IRequirement>{
+            id: idHolder.id++,
+            date: d.date,
+            workUser: this.userStore.getById(workUserMarianaId),
+            priority: highPriority,
+            requirementType: vacationReqType
+          }));
+        }
       }
     });
 
