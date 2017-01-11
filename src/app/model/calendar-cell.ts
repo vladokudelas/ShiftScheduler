@@ -65,14 +65,22 @@ export class CalendarCell {
         return null;
     }
 
-    public get requirementsHtml(): string {
-        return '<b>Test</b>';
+    public get cssClass(): any {
+        return {
+            weekend: this.isWeekend,
+            holiday: this.isHoliday,
+            invalid: this.markInvalid
+        };
     }
 
     public isHoliday: boolean = false;
     public shiftHours: number = 0;
     public workUser: WorkUser = null;
     public requirements: Requirement[] = null;
+
+    public markInvalid: boolean;
+    public redIcon: boolean;
+    public greenIcon: boolean;
 
     constructor(
         public day: number,

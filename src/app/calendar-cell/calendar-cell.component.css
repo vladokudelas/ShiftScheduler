@@ -47,6 +47,10 @@
     background: lightgray;
 }
 
+.invalid {
+    background: red;
+}
+
 /* colors */
 .katka-bckg {
     background: purple;

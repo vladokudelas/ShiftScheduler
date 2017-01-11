@@ -112,6 +112,9 @@ export class CalendarService {
         if (calendarMap.hasOwnProperty(dateStr)) {
           calendarMap[dateStr].requirements = calendarMap[dateStr].requirements || [];
           calendarMap[dateStr].requirements.push(r);
+          
+          calendarMap[dateStr].redIcon = true;
+          calendarMap[dateStr].greenIcon = true;
         } else {
           console.error(`Not found date in calendar for requirement ${dateStr}`);
         }

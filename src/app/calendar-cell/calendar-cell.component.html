@@ -1,32 +1,29 @@
-<div>
-    <popover-content #popoverContent>
-        <div class="row col" *ngFor="let r of day.requirements">
-            <button type="button" class="close" style="float: left;" aria-label="close" (click)="removeRequirement(r.id)">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <span>{{r.workUser.name + ', ' + r.requirementType.display + ', ' + r.priority.display}}</span>
+<div class="card col calendar-cell" [id]="day.dateString" [ngClass]="day.cssClass">
+    <div class="card-block">
+        <div class="row">
+            <span class="col text-left calendar-cell-date">{{day.dateString}}</span>
+            <input type="number" class="col justify-content-start calendar-cell-hours text-center" name="shiftHours" [ngModel]="day.shiftHours"
+                (ngModelChange)="setShiftHours($event)">
         </div>
-    </popover-content>
-    <div class="card col calendar-cell" [id]="day.dateString" [ngClass]="(day.isWeekend ? 'weekend' : '') + ' ' + (day.isHoliday ? 'holiday' : '')"
-        [popover]="popoverContent" [popoverDisabled]="!day.requirementsString" [popoverDismissTimeout]="0">
-        <div class="card-block">
-            <div class="row">
-                <span class="col text-left calendar-cell-date">{{day.dateString}}</span>
-                <input type="number" class="col justify-content-start calendar-cell-hours text-center" name="shiftHours" [ngModel]="day.shiftHours"
-                    (ngModelChange)="setShiftHours($event)">
-            </div>
-            <div class="row">
-                <fieldset [disabled]="!day.isEditable">
-                    <select required class="calendar-cell-worker" id="workUser" name="workUser" [ngModel]="day.workUser ? day.workUser.id : 0"
-                        (ngModelChange)="setWorkUser($event)" [ngClass]="day.backgroundCss">
+        <div class="row">
+            <fieldset [disabled]="!day.isEditable">
+                <select required class="calendar-cell-worker" id="workUser" name="workUser" [ngModel]="day.workUser ? day.workUser.id : 0"
+                    (ngModelChange)="setWorkUser($event)" [ngClass]="day.backgroundCss">
                         <option value="0"> -- select -- </option>
                         <option *ngFor="let workUser of workUsers" [value]="workUser.id">{{workUser.name}}</option>
                     </select>
-                </fieldset>
+            </fieldset>
+        </div>
+        <popover-content #popoverContent>
+            <div class="row col" *ngFor="let r of day.requirements">
+                <button type="button" class="close" style="float: left;" aria-label="close" (click)="removeRequirement(r.id)">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <span>{{r.workUser.name + ', ' + r.requirementType.display + ', ' + r.priority.display}}</span>
             </div>
-            <div class="row calendar-cell-requirements">
-                <span class="text-left">{{day.requirementsString ? day.requirementsString : '-'}}</span>
-            </div>
+        </popover-content>
+        <div class="row calendar-cell-requirements" [popover]="popoverContent" [popoverDisabled]="!day.requirementsString" [popoverDismissTimeout]="0">
+            <span class="text-left">{{day.requirementsString ? day.requirementsString : '-'}}</span>
         </div>
     </div>
 </div>
