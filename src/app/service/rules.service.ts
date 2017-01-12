@@ -3,7 +3,7 @@ import * as moment from 'moment';
 import { List } from 'immutable';
 
 import { UserStore } from './user.store';
-import { CalendarCell, Calendar, Weekdays, Requirement, workReqType } from '../model';
+import { CalendarCell, Calendar, Weekdays, Requirement, workReqType, vacationReqType } from '../model';
 
 @Injectable()
 export class RulesService {
@@ -51,4 +51,24 @@ export class RulesService {
     });
   }
 
+  public checkCalendarCellValidity(selectedMonth: moment.Moment, calendar: Calendar): Calendar {
+
+    calendar.getAllDays().forEach(d => {
+      d.invalidMessages = null;
+      d.markInvalid = false;
+
+      // Check vacation requirements
+      if (d.isEditable && d.requirements && d.isWorkUserAssigned) {
+        d.requirements.forEach(r => {
+          if (r.requirementType.value === vacationReqType.value && r.workUser.id === d.workUser.id) {
+            d.markInvalid = true;
+            d.invalidMessages = d.invalidMessages || [];
+            d.invalidMessages.push(`${r.workUser.name} ma pozadavek ${r.requirementType.display}`);
+          }
+        });
+      }
+    });
+
+    return calendar;
+  }
 }

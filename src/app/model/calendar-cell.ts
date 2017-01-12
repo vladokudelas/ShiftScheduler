@@ -79,6 +79,7 @@ export class CalendarCell {
     public requirements: Requirement[] = null;
 
     public markInvalid: boolean;
+    public invalidMessages: string[] = null;
     public redIcon: boolean;
     public greenIcon: boolean;
 

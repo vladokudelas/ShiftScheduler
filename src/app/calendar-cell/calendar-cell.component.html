@@ -1,6 +1,11 @@
 <div class="card col calendar-cell" [id]="day.dateString" [ngClass]="day.cssClass">
     <div class="card-block">
-        <div class="row">
+        <popover-content #popoverInvalidContent placement="top">
+            <div class="row col" *ngFor="let m of day.invalidMessages">
+                <span>{{m}}</span>
+            </div>
+        </popover-content>
+        <div class="row" [popover]="popoverInvalidContent" [popoverDisabled]="!day.invalidMessages" [popoverDismissTimeout]="3000" >
             <span class="col text-left calendar-cell-date">{{day.dateString}}</span>
             <input type="number" class="col justify-content-start calendar-cell-hours text-center" name="shiftHours" [ngModel]="day.shiftHours"
                 (ngModelChange)="setShiftHours($event)">
@@ -14,7 +19,7 @@
                     </select>
             </fieldset>
         </div>
-        <popover-content #popoverContent>
+        <popover-content #popoverRequirementsContent>
             <div class="row col" *ngFor="let r of day.requirements">
                 <button type="button" class="close" style="float: left;" aria-label="close" (click)="removeRequirement(r.id)">
                     <span aria-hidden="true">&times;</span>
@@ -22,7 +27,7 @@
                 <span>{{r.workUser.name + ', ' + r.requirementType.display + ', ' + r.priority.display}}</span>
             </div>
         </popover-content>
-        <div class="row calendar-cell-requirements" [popover]="popoverContent" [popoverDisabled]="!day.requirementsString" [popoverDismissTimeout]="0">
+        <div class="row calendar-cell-requirements" [popover]="popoverRequirementsContent" [popoverDisabled]="!day.requirementsString" [popoverDismissTimeout]="0">
             <span class="text-left">{{day.requirementsString ? day.requirementsString : '-'}}</span>
         </div>
     </div>

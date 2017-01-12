@@ -103,6 +103,7 @@ function reduceState(
         }
         if (state.calendar) {
             state.hourInfo = calendarService.calculateHours(state.selectedMonth, state.calendar, state.requirements);
+            state.calendar = ruleService.checkCalendarCellValidity(state.selectedMonth, state.calendar);
         }
 
         return state;
