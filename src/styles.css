@@ -23,3 +23,58 @@ body {
 .popover-content {
     width: 16em;
 }
+
+/* colors */
+.katka-bckg {
+    background: purple;
+}
+
+.btn-primary.active.katka-bckg {
+    background-color: purple;
+    text-decoration: underline;
+}
+
+.matej-bckg {
+    background: lightblue;
+}
+
+.btn-primary.active.matej-bckg {
+    background-color: lightblue;
+    text-decoration: underline;
+}
+
+.david-bckg {
+    background: green;
+}
+
+.btn-primary.active.david-bckg {
+    background-color: green;
+    text-decoration: underline;
+}
+
+.mariana-bckg {
+    background: pink;
+}
+
+.btn-primary.active.mariana-bckg {
+    background-color: pink;
+    text-decoration: underline;
+}
+
+.honza-bckg {
+    background: yellow;
+}
+
+.btn-primary.active.honza-bckg {
+    background-color: yellow;
+    text-decoration: underline;
+}
+
+.tomas-bckg {
+    background: orange;
+}
+
+.btn-primary.active.tomas-bckg {
+    background-color: orange;
+    text-decoration: underline;
+}

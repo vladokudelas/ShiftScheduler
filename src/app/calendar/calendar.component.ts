@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import { CalendarCell } from '../model';
+
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
@@ -13,6 +15,9 @@ export class CalendarComponent implements OnInit {
   @Input()
   public calendar = null;
 
+  @Input()
+  public workUserFilter = {};
+
   public days = ['Pondelok', 'Utorok', 'Streda', 'Stvrtok', 'Piatok', 'Sobota', 'Nedela'];
 
   public get isEmpty(): boolean {
@@ -21,7 +26,17 @@ export class CalendarComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
+  }
+
+  public getCellClass(day: CalendarCell) {
+    if (Object.getOwnPropertyNames(this.workUserFilter).length === 0) {
+      return { opac: false };
+    }
+
+    return {
+      opac: day.isEditable && day.isWorkUserAssigned && !this.workUserFilter.hasOwnProperty(day.workUser.id)
+    };
   }
 
 }

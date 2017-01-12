@@ -65,6 +65,10 @@ function reduceState(
             state.requirements = List<Requirement>();
         }
 
+        if (!state.workUserFilter) {
+            state.workUserFilter = {};
+        }
+
         switch (action.type) {
             case ActionType.GenerateCalendar:
                 state.selectedMonth = (action as Actions.GenerateCalendarAction).month;
@@ -99,6 +103,14 @@ function reduceState(
             case ActionType.ChangeShiftHours:
                 let csha = <Actions.ChangeShiftHoursAction>action;
                 csha.cell.shiftHours = csha.shiftHours;
+                break;
+            case ActionType.ToggleWorkUserFilter:
+                let twufa = <Actions.ToggleWorkUserFilterAction>action;
+                if (state.workUserFilter.hasOwnProperty(twufa.workUser.id)) {
+                    delete state.workUserFilter[twufa.workUser.id];
+                } else {
+                    state.workUserFilter[twufa.workUser.id] = twufa.workUser;
+                }
                 break;
         }
         if (state.calendar) {

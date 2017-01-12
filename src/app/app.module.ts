@@ -17,6 +17,7 @@ import { CalendarRequirementsComponent } from './calendar-requirements/calendar-
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { PopoverModule } from 'ng2-popover';
+import { CalendarFilterComponent } from './calendar-filter/calendar-filter.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { PopoverModule } from 'ng2-popover';
     CalendarCellDayComponent,
     CalendarHoursComponent,
     CalendarRequirementsFormComponent,
-    CalendarRequirementsComponent
+    CalendarRequirementsComponent,
+    CalendarFilterComponent
   ],
   imports: [
     BrowserModule,

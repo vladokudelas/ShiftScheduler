@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
   public calendar: Calendar = null;
   public hourInfo = [];
   public requirements = List<Requirement>();
+  public workUserFilter = {};
 
   constructor(
     @Inject(dispatcherToken) private dispatcher: Observer<Action>,
@@ -32,6 +33,7 @@ export class AppComponent implements OnInit {
       this.calendar = s.calendar;
       this.requirements = s.requirements;
       this.hourInfo = s.hourInfo;
+      this.workUserFilter = s.workUserFilter;
     });
     this.dispatcher.next(new Actions.EmptyAction());
   }

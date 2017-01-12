@@ -7,7 +7,8 @@ export const initAppState = <AppState>{
     selectedMonth: null,
     calendar: null,
     hourInfo: [],
-    requirements: null
+    requirements: null,
+    workUserFilter: {}
 };
 
 export interface AppState {
@@ -15,4 +16,5 @@ export interface AppState {
     calendar: Calendar;
     hourInfo: HourInfo[];
     requirements: List<Requirement>;
+    workUserFilter: any;
 }
