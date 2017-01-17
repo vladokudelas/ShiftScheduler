@@ -11,7 +11,7 @@
 
 .card-block {
     padding: 1% 7% 1% 1%;
-    width: 8em;
+    width: 9em;
 }
 
 .calendar-cell {
@@ -49,4 +49,16 @@
 
 .invalid {
     background: red;
+}
+
+.calendar-cell-success {
+    background-color: #5cb85c;
+    color: white;
+    padding: 3px;
+}
+
+.calendar-cell-fail {
+    background-color: #d9534f;
+    color: white;
+    padding: 3px;
 }

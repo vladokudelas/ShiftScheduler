@@ -3,7 +3,7 @@ import * as moment from 'moment';
 import { List } from 'immutable';
 
 import { UserStore } from './user.store';
-import { CalendarCell, Calendar, Weekdays, Requirement, workReqType, vacationReqType } from '../model';
+import { CalendarCell, Calendar, Weekdays, Requirement, workReqType, vacationReqType, freeReqType } from '../model';
 
 @Injectable()
 export class RulesService {
@@ -56,12 +56,24 @@ export class RulesService {
     calendar.getAllDays().forEach(d => {
       d.invalidMessages = null;
       d.markInvalid = false;
+      d.redIcon = false;
+      d.greenIcon = false;
 
-      // Check vacation requirements
       if (d.isEditable && d.requirements && d.isWorkUserAssigned) {
         d.requirements.forEach(r => {
+          // Check vacation requirements
           if (r.requirementType.value === vacationReqType.value && r.workUser.id === d.workUser.id) {
             d.markInvalid = true;
+            d.invalidMessages = d.invalidMessages || [];
+            d.invalidMessages.push(`${r.workUser.name} ma pozadavek ${r.requirementType.display}`);
+          }
+          // Check work requirement is fulfilled 
+          if (r.requirementType.value === workReqType.value && r.workUser.id === d.workUser.id) {
+            d.greenIcon = true;
+          }
+          // Check free requirement has collision
+          if (r.requirementType.value === freeReqType.value && r.workUser.id === d.workUser.id) {
+            d.redIcon = true;
             d.invalidMessages = d.invalidMessages || [];
             d.invalidMessages.push(`${r.workUser.name} ma pozadavek ${r.requirementType.display}`);
           }

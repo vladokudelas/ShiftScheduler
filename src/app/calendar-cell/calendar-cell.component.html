@@ -14,9 +14,11 @@
             <fieldset [disabled]="!day.isEditable">
                 <select required class="calendar-cell-worker" id="workUser" name="workUser" [ngModel]="day.workUser ? day.workUser.id : 0"
                     (ngModelChange)="setWorkUser($event)" [ngClass]="day.backgroundCss">
-                        <option value="0"> -- select -- </option>
-                        <option *ngFor="let workUser of workUsers" [value]="workUser.id">{{workUser.name}}</option>
-                    </select>
+                    <option value="0"> -- select -- </option>
+                    <option *ngFor="let workUser of workUsers" [value]="workUser.id">{{workUser.name}}</option>
+                </select>
+                <li class="calendar-cell-success fa fa-check" *ngIf="day.greenIcon"></li>
+                <li class="calendar-cell-fail fa fa-times" *ngIf="day.redIcon"></li>
             </fieldset>
         </div>
         <popover-content #popoverRequirementsContent>
