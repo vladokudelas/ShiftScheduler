@@ -1,8 +1,11 @@
 <div class="container-fluid">
-    <div class="row">
+    <div class="row no-print">
         <app-calendar-form #calendarForm (generateCells)="generateCells(calendarForm.month)"></app-calendar-form>
         <app-calendar-requirements-form></app-calendar-requirements-form>
         <!--<app-calendar-requirements></app-calendar-requirements>-->
+        <div>
+            <button class="btn btn-primary" (click)="print()">Print</button>
+        </div>
     </div>
     <div class="row">
         <app-calendar [calendar]="calendar" [requirements]="requirements" [workUserFilter]="workUserFilter"></app-calendar>

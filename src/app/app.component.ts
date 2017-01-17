@@ -44,4 +44,10 @@ export class AppComponent implements OnInit {
     let m = moment(new Date(month)).date(1);
     this.dispatcher.next(new Actions.GenerateCalendarAction(m));
   }
+
+  public print() {
+    $('.no-print').hide();
+    window.print();
+    $('.no-print').show();
+  }
 }

@@ -11,7 +11,7 @@
 
 .card-block {
     padding: 1% 7% 1% 1%;
-    width: 9em;
+    width: 8em;
 }
 
 .calendar-cell {
@@ -55,10 +55,12 @@
     background-color: #5cb85c;
     color: white;
     padding: 3px;
+    font-size: 10px;
 }
 
 .calendar-cell-fail {
     background-color: #d9534f;
     color: white;
     padding: 3px;
+    font-size: 10px;
 }
