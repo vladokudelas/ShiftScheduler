@@ -52,26 +52,29 @@ export class CalendarService {
 
   public generateAutoRequirements(selectedMonth: moment.Moment, calendar: Calendar, idHolder: any, existingRequirements: List<Requirement>): Requirement[] {
     let result: Requirement[] = [];
-    calendar.getAllDays().forEach(d => {
-      // Rule for mariana Sunday and Monday free
-      if (selectedMonth && d.date.month() === selectedMonth.month() && (d.isSunday || d.day === Weekdays.Monday)) {
 
-        let isFound = false;
-        existingRequirements.forEach(r => {
-          isFound = isFound || (r.workUser.id === workUserMarianaId && r.date.isSame(d.date, 'day'))
-        });
+    if (calendar) {
+      calendar.getAllDays().forEach(d => {
+        // Rule for mariana Sunday and Monday free
+        if (selectedMonth && d.date.month() === selectedMonth.month() && (d.isSunday || d.day === Weekdays.Monday)) {
 
-        if (!isFound) {
-          result.push(new Requirement(<IRequirement>{
-            id: idHolder.id++,
-            date: d.date,
-            workUser: this.userStore.getById(workUserMarianaId),
-            priority: highPriority,
-            requirementType: vacationReqType
-          }));
+          let isFound = false;
+          existingRequirements.forEach(r => {
+            isFound = isFound || (r.workUser.id === workUserMarianaId && r.date.isSame(d.date, 'day'))
+          });
+
+          if (!isFound) {
+            result.push(new Requirement(<IRequirement>{
+              id: idHolder.id++,
+              date: d.date,
+              workUser: this.userStore.getById(workUserMarianaId),
+              priority: highPriority,
+              requirementType: vacationReqType
+            }));
+          }
         }
-      }
-    });
+      });
+    }
 
     return result;
   }
@@ -104,22 +107,24 @@ export class CalendarService {
   }
 
   public setRequirementsInCalendar(selectedMonth: moment.Moment, calendar: Calendar, requirements: List<Requirement>): Calendar {
-    calendar.getAllDays().forEach(d => d.requirements = null);
-    let calendarMap = calendar.getMap();
-    requirements.forEach(r => {
-      if (r.date.month() === selectedMonth.month()) {
-        let dateStr = r.date.format(CalendarCell.DateStringFormat);
-        if (calendarMap.hasOwnProperty(dateStr)) {
-          calendarMap[dateStr].requirements = calendarMap[dateStr].requirements || [];
-          calendarMap[dateStr].requirements.push(r);
-          
-          calendarMap[dateStr].redIcon = true;
-          calendarMap[dateStr].greenIcon = true;
-        } else {
-          console.error(`Not found date in calendar for requirement ${dateStr}`);
+    if (calendar) {
+      calendar.getAllDays().forEach(d => d.requirements = null);
+      let calendarMap = calendar.getMap();
+      requirements.forEach(r => {
+        if (r.date.month() === selectedMonth.month()) {
+          let dateStr = r.date.format(CalendarCell.DateStringFormat);
+          if (calendarMap.hasOwnProperty(dateStr)) {
+            calendarMap[dateStr].requirements = calendarMap[dateStr].requirements || [];
+            calendarMap[dateStr].requirements.push(r);
+
+            calendarMap[dateStr].redIcon = true;
+            calendarMap[dateStr].greenIcon = true;
+          } else {
+            console.error(`Not found date in calendar for requirement ${dateStr}`);
+          }
         }
-      }
-    });
+      });
+    }
 
     return calendar;
   }

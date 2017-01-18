@@ -1,4 +1,5 @@
 import { OpaqueToken } from '@angular/core';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { List } from 'immutable';
 
@@ -25,7 +26,7 @@ export const stateAndDispatcher = [
     {
         provide: stateToken,
         useFactory: stateFactory,
-        deps: [initStateToken, dispatcherToken, CalendarService, UserStore, RulesService]
+        deps: [initStateToken, dispatcherToken, CalendarService, UserStore, RulesService, Http]
     }
 ];
 
@@ -44,9 +45,10 @@ export function stateFactory(
     actions: Observable<Action>,
     calendarService: CalendarService,
     userStore: UserStore,
-    ruleService: RulesService): Observable<AppState> {
+    ruleService: RulesService,
+    http: Http): Observable<AppState> {
 
-    const appStateObs: Observable<AppState> = reduceState(initialState, actions, calendarService, userStore, ruleService).share();
+    const appStateObs: Observable<AppState> = reduceState(initialState, actions, calendarService, userStore, ruleService, http).share();
     return wrapIntoBehavior(initialState, appStateObs);
 }
 
@@ -57,7 +59,8 @@ function reduceState(
     actions: Observable<Action>,
     calendarService: CalendarService,
     userStore: UserStore,
-    ruleService: RulesService): Observable<AppState> {
+    ruleService: RulesService,
+    http: Http): Observable<AppState> {
 
     return actions.scan((state: AppState, action: Action) => {
 
@@ -118,6 +121,21 @@ function reduceState(
             state.calendar = ruleService.checkCalendarCellValidity(state.selectedMonth, state.calendar);
         }
 
+        sendNewState(state, http);
+
         return state;
     });
+}
+
+function sendNewState(state: AppState, http: Http) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    let content = {
+        month: state.selectedMonth,
+        data: state
+    };
+
+    http.post('http://localhost:3000/', JSON.stringify(content), options)
+        .toPromise();
 }
