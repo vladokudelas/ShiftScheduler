@@ -6,6 +6,7 @@ var jsonfile = require('jsonfile')
 var moment = require('moment');
 
 var saveDir = path.join(__dirname, 'save');
+var archiveDir = path.join(saveDir, 'archive');
  
 var app = express()
 app.use(bodyParser.json()); // for parsing application/json
@@ -15,26 +16,38 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.post('/', function (req, res) {
+var save = (dir, req) => {
     var fileName = moment().format('YYYY-M-D-HH-mm-ss') + '.json';
     var filePath = '';
     if (req.body.month) {
-        var dirPath = path.join(saveDir, moment(res.month).format('YYYY-M'));
+        var dirPath = path.join(dir, moment(req.body.month).format('YYYY-M'));
         if (!fs.existsSync(dirPath)) {
             fs.mkdirSync(dirPath);
         }
 
         filePath = path.join(dirPath, fileName)
     } else {
-        filePath = path.join(saveDir, fileName);
+        filePath = path.join(dir, fileName);
     }
 
     jsonfile.writeFile(filePath, req.body.data, function (err) {
         console.error(err)
     })
+};
+
+app.post('/', function (req, res) {
+    save(saveDir, req);
 
     res.send('ok');
-})
+});
+
+app.post('/save', function (req, res) {
+    save(archiveDir, req);
+
+    res.send('ok');
+});
+
+
 
 app.listen(3000, function () {
     console.log('Server app listening on port 3000!')

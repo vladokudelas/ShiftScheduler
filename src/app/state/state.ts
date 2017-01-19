@@ -6,7 +6,7 @@ import { List } from 'immutable';
 import { Action, ActionType } from './actions';
 import * as Actions from './actions';
 import { AppState, initAppState } from './state.model';
-import { CalendarService, UserStore, RulesService } from '../service';
+import { CalendarService, UserStore, RulesService, DateService } from '../service';
 import { Requirement, IRequirement } from '../model';
 
 export const initStateToken = new OpaqueToken('initState');
@@ -26,7 +26,7 @@ export const stateAndDispatcher = [
     {
         provide: stateToken,
         useFactory: stateFactory,
-        deps: [initStateToken, dispatcherToken, CalendarService, UserStore, RulesService, Http]
+        deps: [initStateToken, dispatcherToken, CalendarService, UserStore, RulesService, Http, DateService]
     }
 ];
 
@@ -46,9 +46,10 @@ export function stateFactory(
     calendarService: CalendarService,
     userStore: UserStore,
     ruleService: RulesService,
-    http: Http): Observable<AppState> {
+    http: Http,
+    dateService: DateService): Observable<AppState> {
 
-    const appStateObs: Observable<AppState> = reduceState(initialState, actions, calendarService, userStore, ruleService, http).share();
+    const appStateObs: Observable<AppState> = reduceState(initialState, actions, calendarService, userStore, ruleService, http, dateService).share();
     return wrapIntoBehavior(initialState, appStateObs);
 }
 
@@ -60,7 +61,8 @@ function reduceState(
     calendarService: CalendarService,
     userStore: UserStore,
     ruleService: RulesService,
-    http: Http): Observable<AppState> {
+    http: Http,
+    dateService: DateService): Observable<AppState> {
 
     return actions.scan((state: AppState, action: Action) => {
 
@@ -72,6 +74,7 @@ function reduceState(
             state.workUserFilter = {};
         }
 
+        let saveState = true;
         switch (action.type) {
             case ActionType.GenerateCalendar:
                 state.selectedMonth = (action as Actions.GenerateCalendarAction).month;
@@ -115,19 +118,34 @@ function reduceState(
                     state.workUserFilter[twufa.workUser.id] = twufa.workUser;
                 }
                 break;
+            case ActionType.Save:
+                sendNewState(state, http, true);
+                saveState = false;
+                break;
+            case ActionType.Load:
+                state = loadState((<Actions.LoadAction>action).jsonStr, userStore, dateService);
+                saveState = false;
+                break;
         }
         if (state.calendar) {
             state.hourInfo = calendarService.calculateHours(state.selectedMonth, state.calendar, state.requirements);
             state.calendar = ruleService.checkCalendarCellValidity(state.selectedMonth, state.calendar);
         }
 
-        sendNewState(state, http);
+        if (saveState) {
+            sendNewState(state, http, false);
+        }
 
         return state;
     });
 }
 
-function sendNewState(state: AppState, http: Http) {
+function loadState(jsonStr: string, userStore: UserStore, dateService: DateService): AppState {
+    let jsonPojo = JSON.parse(jsonStr);
+    return new AppState(jsonPojo, userStore);
+}
+
+function sendNewState(state: AppState, http: Http, isSaveAction: boolean) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
@@ -136,6 +154,13 @@ function sendNewState(state: AppState, http: Http) {
         data: state
     };
 
-    http.post('http://localhost:3000/', JSON.stringify(content), options)
+    let url;
+    if (isSaveAction) {
+        url = 'http://localhost:3000/save/';
+    } else {
+        url = 'http://localhost:3000/';
+    }
+
+    http.post(url, JSON.stringify(content), options)
         .toPromise();
 }

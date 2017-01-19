@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Input } from '@angular/core';
 import { List } from 'immutable';
 import { Observer, Observable } from 'rxjs';
 
@@ -15,6 +15,9 @@ export class CalendarFilterComponent implements OnInit {
 
   public workUsers: List<WorkUser> = List<WorkUser>();
 
+  @Input()
+  public workUserFilter: any;
+
   constructor(
     public userStore: UserStore,
     @Inject(dispatcherToken) private dispatcher: Observer<Action>
@@ -24,6 +27,14 @@ export class CalendarFilterComponent implements OnInit {
 
   public ngOnInit() {
     this.workUsers = this.userStore.getWorkers();
+  }
+
+  public getClass(workUser: WorkUser): any {
+    let css = {
+      active: this.workUserFilter.hasOwnProperty(workUser.id)
+    };
+    css[workUser.colorCss] = true;
+    return css;
   }
 
   public workUserClicked(workUser: WorkUser, checked: boolean) {

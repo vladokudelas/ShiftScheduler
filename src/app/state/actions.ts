@@ -9,7 +9,9 @@ export enum ActionType {
     RemoveRequirement = 3,
     ChangeWorkUser = 4,
     ChangeShiftHours = 5,
-    ToggleWorkUserFilter = 6
+    ToggleWorkUserFilter = 6,
+    Save = 7,
+    Load = 8
 }
 
 export class BaseAction {
@@ -63,10 +65,24 @@ export class ToggleWorkUserFilterAction extends BaseAction {
     }
 }
 
+export class SaveAction extends BaseAction {
+    constructor() {
+        super(ActionType.Save);
+    }
+}
+
+export class LoadAction extends BaseAction {
+    constructor(public jsonStr: string) {
+        super(ActionType.Load);
+    }
+}
+
 export type Action = GenerateCalendarAction
     | EmptyAction
     | AddRequirementAction
     | RemoveRequirementAction
     | ChangeWorkUserAction
     | ChangeShiftHoursAction
-    | ToggleWorkUserFilterAction;
+    | ToggleWorkUserFilterAction
+    | SaveAction
+    | LoadAction;

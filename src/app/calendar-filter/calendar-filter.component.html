@@ -1,6 +1,6 @@
 <div class="col calendar-filter">
   <div class="btn-group" data-toggle="buttons">
-    <label *ngFor="let workUser of workUsers" [class]="'btn btn-primary calendar-filter-button ' + workUser.colorCss" (click)="workUserClicked(workUser)">
+    <label *ngFor="let workUser of workUsers" class="btn btn-primary calendar-filter-button" [ngClass]="getClass(workUser)" (click)="workUserClicked(workUser)">
       <input type="checkbox" [id]="'workUserFilter-' + workUser.id" autocomplete="off"> {{workUser.name}}
     </label>
   </div>
