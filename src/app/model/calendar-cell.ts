@@ -76,7 +76,7 @@ export class CalendarCell {
     public isHoliday: boolean = false;
     public shiftHours: number = 0;
     public workUser: WorkUser = null;
-    public requirements: Requirement[] = null;
+    public requirements: Requirement[] = [];
 
     public markInvalid: boolean;
     public invalidMessages: string[] = null;

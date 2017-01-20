@@ -2,7 +2,6 @@ import { HourInfo } from '../model/hour-info';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { Observer } from 'rxjs';
-import { List } from 'immutable';
 
 
 import { CalendarCell, Calendar, highPriority, vacationReqType, Requirement, IRequirement, Weekdays } from '../model';
@@ -50,7 +49,7 @@ export class CalendarService {
     return new Calendar(result);
   }
 
-  public generateAutoRequirements(selectedMonth: moment.Moment, calendar: Calendar, idHolder: any, existingRequirements: List<Requirement>): Requirement[] {
+  public generateAutoRequirements(selectedMonth: moment.Moment, calendar: Calendar, idHolder: any, existingRequirements: Requirement[]): Requirement[] {
     let result: Requirement[] = [];
 
     if (calendar) {
@@ -60,7 +59,7 @@ export class CalendarService {
 
           let isFound = false;
           existingRequirements.forEach(r => {
-            isFound = isFound || (r.workUser.id === workUserMarianaId && r.date.isSame(d.date, 'day'))
+            isFound = isFound || (r.workUser.id === workUserMarianaId && r.date.isSame(d.date, 'day'));
           });
 
           if (!isFound) {
@@ -79,7 +78,7 @@ export class CalendarService {
     return result;
   }
 
-  public calculateHours(selectedMonth: moment.Moment, calendar: Calendar, requirements: List<Requirement>): HourInfo[] {
+  public calculateHours(selectedMonth: moment.Moment, calendar: Calendar, requirements: Requirement[]): HourInfo[] {
     let result: HourInfo[] = [];
     this.userStore.getWorkers().forEach(w => {
 
@@ -106,7 +105,7 @@ export class CalendarService {
     return result;
   }
 
-  public setRequirementsInCalendar(selectedMonth: moment.Moment, calendar: Calendar, requirements: List<Requirement>): Calendar {
+  public setRequirementsInCalendar(selectedMonth: moment.Moment, calendar: Calendar, requirements: Requirement[]): Calendar {
     if (calendar) {
       calendar.getAllDays().forEach(d => d.requirements = null);
       let calendarMap = calendar.getMap();

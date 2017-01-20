@@ -1,4 +1,3 @@
-import { List } from 'immutable';
 import * as moment from 'moment';
 
 import { Calendar, Requirement, HourInfo, lowPriority, mediumPriority, highPriority, workReqType, freeReqType, vacationReqType, CalendarCell } from '../model';
@@ -16,14 +15,16 @@ export class AppState {
     public selectedMonth: moment.Moment;
     public calendar: Calendar;
     public hourInfo: HourInfo[];
-    public requirements: List<Requirement>;
+    public requirements: Requirement[];
     public workUserFilter: any;
 
     constructor(obj?: any, userStore?: UserStore) {
         if (obj) {
-            if (obj.selectedMonth) this.selectedMonth = moment(obj.selectedMonth);
+            if (obj.selectedMonth) { 
+                this.selectedMonth = moment(obj.selectedMonth); 
+            }
             if (obj.requirements) {
-                this.requirements = List<Requirement>(obj.requirements.map(r => {
+                this.requirements = obj.requirements.map(r => {
                     return new Requirement({
                         id: r.id,
                         date: moment(r.date),
@@ -39,7 +40,7 @@ export class AppState {
                                 ? workReqType
                                 : vacationReqType
                     });
-                }));
+                });
             }
             if (obj.calendar) {
                 if (obj.calendar.calendar) {
@@ -65,7 +66,7 @@ export class AppState {
                                 });
                             }
                             week.push(c);
-                        })
+                        });
 
                         cells.push(week);
                     });
@@ -82,7 +83,7 @@ export class AppState {
                     );
                 });
             }
-            if (obj.workUserFilter) this.workUserFilter = obj.workUserFilter;
+            if (obj.workUserFilter) { this.workUserFilter = obj.workUserFilter; }
         }
     }
 }

@@ -1,6 +1,5 @@
 import { lowPriority } from '../model/priority';
 import { Component, OnInit, Inject } from '@angular/core';
-import { List } from 'immutable';
 import { Observer } from 'rxjs';
 import * as moment from 'moment';
 
@@ -15,7 +14,7 @@ import { Action, dispatcherToken, AddRequirementAction } from '../state';
 })
 export class CalendarRequirementsFormComponent implements OnInit {
 
-  public workUsers: List<WorkUser> = List<WorkUser>();
+  public workUsers: WorkUser[] = [];
 
   public date;
   public priority: Priority = lowPriority;

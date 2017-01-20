@@ -22,7 +22,7 @@ export class CalendarRequirementsComponent implements OnInit {
   ngOnInit() {
     this.state.subscribe(s => {
       if (s.requirements) {
-        this.rows = s.requirements.toArray();
+        this.rows = s.requirements;
       }
     });
   }

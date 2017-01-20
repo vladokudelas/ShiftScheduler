@@ -1,7 +1,6 @@
 import { OpaqueToken } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
-import { List } from 'immutable';
 
 import { Action, ActionType } from './actions';
 import * as Actions from './actions';
@@ -67,7 +66,7 @@ function reduceState(
     return actions.scan((state: AppState, action: Action) => {
 
         if (!state.requirements) {
-            state.requirements = List<Requirement>();
+            state.requirements = [];
         }
 
         if (!state.workUserFilter) {
@@ -81,12 +80,12 @@ function reduceState(
                 state.calendar = calendarService.generateCalendar(state.selectedMonth);
                 ruleService.assignWorkUsersAccordingToRequirements(state.calendar, state.requirements);
                 let requirements = calendarService.generateAutoRequirements(state.selectedMonth, state.calendar, { id: requirementsIdCounter }, state.requirements);
-                state.requirements = state.requirements.concat(requirements).toList();
+                state.requirements = state.requirements.concat(requirements);
                 state.calendar = calendarService.setRequirementsInCalendar(state.selectedMonth, state.calendar, state.requirements);
                 break;
             case ActionType.AddRequirement:
                 let a = <Actions.AddRequirementAction>action;
-                state.requirements = state.requirements.push(new Requirement(<IRequirement>{
+                state.requirements.push(new Requirement(<IRequirement>{
                     id: requirementsIdCounter++,
                     date: a.date,
                     priority: a.priority,
@@ -98,7 +97,7 @@ function reduceState(
             case ActionType.RemoveRequirement:
                 let reqIdxToRemove = state.requirements.findIndex(r => r.id === (<Actions.RemoveRequirementAction>action).id);
                 if (reqIdxToRemove >= 0) {
-                    state.requirements = state.requirements.remove(reqIdxToRemove);
+                    state.requirements.splice(reqIdxToRemove, 1);
                 }
                 state.calendar = calendarService.setRequirementsInCalendar(state.selectedMonth, state.calendar, state.requirements);
                 break;
@@ -161,6 +160,14 @@ function sendNewState(state: AppState, http: Http, isSaveAction: boolean) {
         url = 'http://localhost:3000/';
     }
 
-    http.post(url, JSON.stringify(content), options)
-        .toPromise();
+    let prom = http.post(url, JSON.stringify(content), options)
+                .toPromise();
+    if (isSaveAction) {
+        prom.then((val)=>{
+            alert('Saved ' + val);
+        }).catch((val) => {
+            console.error(val);
+            alert('!!!!!!!!!!!!!!!!!!!!!! ERROR: ' + val);
+        });
+    }
 }

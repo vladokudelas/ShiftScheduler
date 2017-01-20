@@ -1,5 +1,4 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
-import { List } from 'immutable';
 import { Observer, Observable } from 'rxjs';
 
 import { UserStore } from '../service';
@@ -13,7 +12,7 @@ import { dispatcherToken, Action, ToggleWorkUserFilterAction } from '../state';
 })
 export class CalendarFilterComponent implements OnInit {
 
-  public workUsers: List<WorkUser> = List<WorkUser>();
+  public workUsers: WorkUser[] = [];
 
   @Input()
   public workUserFilter: any;

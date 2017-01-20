@@ -1,5 +1,3 @@
-import { Record } from 'immutable';
-
 export interface IWorkUser {
     id: number;
     name: string;
@@ -7,20 +5,16 @@ export interface IWorkUser {
     colorCss: string;
 }
 
-const WorkUserRecord = Record(<IWorkUser>{
-    id: undefined,
-    name: undefined,
-    shortcut: undefined,
-    colorCss: undefined
-});
-
-export class WorkUser extends WorkUserRecord implements IWorkUser {
+export class WorkUser implements IWorkUser {
     id: number;
     name: string;
     colorCss: string;
     shortcut: string;
 
     constructor(props: IWorkUser) {
-        super(props);
+        this.id = props.id;
+        this.name = props.name;
+        this.colorCss = props.colorCss;
+        this.shortcut = props.shortcut;
     }
 }

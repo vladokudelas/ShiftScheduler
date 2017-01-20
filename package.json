@@ -26,7 +26,6 @@
     "core-js": "^2.4.1",
     "express": "^4.14.0",
     "font-awesome": "^4.7.0",
-    "immutable": "^3.8.1",
     "jsonfile": "^2.4.0",
     "moment": "^2.17.1",
     "ng2-popover": "0.0.13",
@@ -36,7 +35,6 @@
   },
   "devDependencies": {
     "@angular/compiler-cli": "^2.3.1",
-    "@types/immutable": "^3.8.6",
     "@types/jasmine": "2.5.38",
     "@types/node": "^6.0.42",
     "@types/jquery": "^2.0.39",

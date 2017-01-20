@@ -2,7 +2,6 @@ import { Action, ChangeShiftHoursAction, ChangeWorkUserAction } from '../state/a
 import { Observer } from 'rxjs/Rx';
 import { dispatcherToken } from '../state';
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { List } from 'immutable';
 import * as moment from 'moment';
 
 import { CalendarCell } from '../model/calendar-cell';
@@ -24,7 +23,7 @@ export class CalendarCellComponent implements OnInit {
   @Input()
   private requirements: Requirement[] = [];
 
-  public workUsers: List<WorkUser> = List<WorkUser>();
+  public workUsers: WorkUser[] = [];
 
   constructor(
     public userStore: UserStore,
@@ -34,15 +33,6 @@ export class CalendarCellComponent implements OnInit {
 
   public ngOnInit() {
     this.workUsers = this.userStore.getWorkers();
-
-    this.requirements.forEach(r => {
-      if (r.requirementType.value === vacationReqType.value && r.date.isSame(this.day.date, 'day')) {
-        let idx = this.workUsers.findIndex(w => w.id === r.workUser.id);
-        if (idx > 0) {
-          this.workUsers = this.workUsers.remove(idx);
-        }
-      }
-    });
   }
 
   public removeRequirement(id: number) {

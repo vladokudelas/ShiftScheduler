@@ -1,4 +1,3 @@
-import { Record } from 'immutable';
 import * as moment from 'moment';
 
 import { WorkUser } from './work-user';
@@ -13,15 +12,7 @@ export interface IRequirement {
     requirementType: RequirementType;
 }
 
-const RequirementRecord = Record(<IRequirement>{
-    id: 0,
-    date: undefined,
-    priority: lowPriority,
-    workUser: undefined,
-    requirementType: requirementTypes[0]
-});
-
-export class Requirement extends RequirementRecord implements IRequirement {
+export class Requirement implements IRequirement {
     id: number;
     date: moment.Moment;
     priority: Priority;
@@ -29,7 +20,11 @@ export class Requirement extends RequirementRecord implements IRequirement {
     requirementType: RequirementType;
 
     constructor(props: IRequirement) {
-        super(props);
+        this.id = props.id;
+        this.date = props.date;
+        this.priority = props.priority;
+        this.workUser = props.workUser;
+        this.requirementType = props.requirementType;
     }
 
     public get dateDisplay(): string {

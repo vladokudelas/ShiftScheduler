@@ -2,7 +2,6 @@ import { highPriority, mediumPriority } from './model/priority';
 import { Component, Inject, OnInit, AfterContentInit } from '@angular/core';
 import { Observer, Observable } from 'rxjs';
 import * as moment from 'moment';
-import { List } from 'immutable';
 
 import { Calendar } from './model';
 import { dispatcherToken, stateToken, Action, AppState } from './state';
@@ -19,7 +18,7 @@ export class AppComponent implements OnInit {
 
   public calendar: Calendar = null;
   public hourInfo = [];
-  public requirements = List<Requirement>();
+  public requirements = [];
   public workUserFilter = {};
   public selectedMonth: moment.Moment = null;
   public renderMonth = null;
@@ -63,21 +62,21 @@ export class AppComponent implements OnInit {
   }
 
   public load() {
-    $("#fileLoader").click();
+    $('#fileLoader').click();
   }
 
   public loadFileSelected(evt) {
-    var f = evt.target.files[0];
+    let f = evt.target.files[0];
 
     if (f) {
-      var r = new FileReader();
+      let r = new FileReader();
       r.onload = (e) => {
-        var contents = (<any>e.target).result;
+        let contents = (<any>e.target).result;
         this.dispatcher.next(new Actions.LoadAction(contents));
       };
       r.readAsText(f);
     } else {
-      alert("Failed to load file");
+      alert('Failed to load file');
     }
   }
 }
