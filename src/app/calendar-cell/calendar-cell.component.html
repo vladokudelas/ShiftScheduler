@@ -8,9 +8,9 @@
         <div class="row" [popover]="popoverInvalidContent" [popoverDisabled]="!day.invalidMessages" [popoverDismissTimeout]="3000" >
             <span class="col text-left calendar-cell-date">{{day.dateString}}</span>
             <input type="number" class="col justify-content-start calendar-cell-hours text-center" name="shiftHours" [ngModel]="day.shiftHours"
-                (ngModelChange)="setShiftHours($event)">
+                (ngModelChange)="setShiftHours($event)" *ngIf="day.isEditable">
         </div>
-        <div class="row">
+        <div class="row" *ngIf="day.isEditable">
             <fieldset [disabled]="!day.isEditable">
                 <select required class="calendar-cell-worker" id="workUser" name="workUser" [ngModel]="day.workUser ? day.workUser.id : 0"
                     (ngModelChange)="setWorkUser($event)" [ngClass]="day.backgroundCss">

@@ -22,13 +22,13 @@ export class CalendarService {
 
     let result = [];
     let firstWeek = [
-      new CalendarCell(undefined, moment(fridayBefore).add(-4, 'day'), this.dateService),
-      new CalendarCell(undefined, moment(fridayBefore).add(-3, 'day'), this.dateService),
-      new CalendarCell(undefined, moment(fridayBefore).add(-2, 'day'), this.dateService),
-      new CalendarCell(undefined, moment(fridayBefore).add(-1, 'day'), this.dateService),
-      new CalendarCell(5, fridayBefore, this.dateService),
-      new CalendarCell(6, moment(fridayBefore).add(1, 'day'), this.dateService),
-      new CalendarCell(0, moment(fridayBefore).add(2, 'day'), this.dateService)
+      new CalendarCell(undefined, moment(fridayBefore).add(-4, 'day'), month, this.dateService),
+      new CalendarCell(undefined, moment(fridayBefore).add(-3, 'day'), month, this.dateService),
+      new CalendarCell(undefined, moment(fridayBefore).add(-2, 'day'), month, this.dateService),
+      new CalendarCell(undefined, moment(fridayBefore).add(-1, 'day'), month, this.dateService),
+      new CalendarCell(5, fridayBefore, month, this.dateService),
+      new CalendarCell(6, moment(fridayBefore).add(1, 'day'), month, this.dateService),
+      new CalendarCell(0, moment(fridayBefore).add(2, 'day'), month, this.dateService)
     ];
     result.push(firstWeek);
 
@@ -36,7 +36,7 @@ export class CalendarService {
     let week = [];
     result.push(week);
     while (d.month() === (month.month() - 1) || d.month() === month.month()) {
-      week.push(new CalendarCell(d.weekday(), moment(d), this.dateService));
+      week.push(new CalendarCell(d.weekday(), moment(d), month, this.dateService));
       d.add(1, 'day');
 
       if (d.weekday() === Weekdays.Monday) {

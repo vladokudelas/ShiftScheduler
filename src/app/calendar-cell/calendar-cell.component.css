@@ -51,6 +51,10 @@
     background: red;
 }
 
+.darker {
+    background: gray;
+}
+
 .calendar-cell-success {
     background-color: #5cb85c;
     color: white;

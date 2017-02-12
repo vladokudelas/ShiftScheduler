@@ -69,7 +69,8 @@ export class CalendarCell {
         return {
             weekend: this.isWeekend,
             holiday: this.isHoliday,
-            invalid: this.markInvalid
+            invalid: this.markInvalid,
+            darker: this.isPreviousMonth
         };
     }
 
@@ -78,6 +79,7 @@ export class CalendarCell {
     public workUser: WorkUser = null;
     public requirements: Requirement[] = [];
 
+    public isPreviousMonth: boolean;
     public markInvalid: boolean;
     public invalidMessages: string[] = null;
     public redIcon: boolean;
@@ -86,7 +88,10 @@ export class CalendarCell {
     constructor(
         public day: number,
         public date: moment.Moment,
+        public month: moment.Moment,
         dateService?: DateService) {
+
+        this.isPreviousMonth = !this.date || this.date.month() !== this.month.month();
 
         if (dateService) {
             this.isHoliday = dateService.isHoliday(date);
