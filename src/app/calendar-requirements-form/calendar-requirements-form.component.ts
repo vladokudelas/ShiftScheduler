@@ -1,10 +1,9 @@
-import { lowPriority } from '../model/priority';
 import { Component, OnInit, Inject } from '@angular/core';
 import { Observer } from 'rxjs';
 import * as moment from 'moment';
 
 import { UserStore } from '../service';
-import { WorkUser, requirementTypes, RequirementType, Priority, priorities } from '../model';
+import { WorkUser, requirementTypes, RequirementType } from '../model';
 import { Action, dispatcherToken, AddRequirementAction } from '../state';
 
 @Component({
@@ -17,11 +16,9 @@ export class CalendarRequirementsFormComponent implements OnInit {
   public workUsers: WorkUser[] = [];
 
   public date;
-  public priority: Priority = lowPriority;
   public workUser: WorkUser;
   public requirementType: RequirementType = requirementTypes[0];
   public _requirementTypes = requirementTypes;
-  public _priorities = priorities;
 
   constructor(
     public userStore: UserStore,
@@ -52,18 +49,13 @@ export class CalendarRequirementsFormComponent implements OnInit {
     }
   }
 
-  public setPriorityType(typeValue: number) {
-    this.priority = priorities[typeValue - 1];
-  }
-
   public addRequirement() {
-    this.dispatcher.next(new AddRequirementAction(moment(this.date), this.workUser, this.priority, this.requirementType));
+    this.dispatcher.next(new AddRequirementAction(moment(this.date), this.workUser, this.requirementType));
     this.reset();
   }
 
   private reset() {
     this.date = undefined;
-    this.priority = lowPriority;
     this.requirementType = requirementTypes[0];
     this.workUser = undefined;
   }

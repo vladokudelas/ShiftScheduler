@@ -1,6 +1,6 @@
 import * as moment from 'moment';
 
-import { RequirementType, WorkUser, Priority, CalendarCell } from '../model';
+import { RequirementType, WorkUser, CalendarCell } from '../model';
 
 export enum ActionType {
     Empty = 0,
@@ -34,7 +34,6 @@ export class AddRequirementAction extends BaseAction {
     constructor(
         public date: moment.Moment,
         public workUser: WorkUser,
-        public priority: Priority,
         public requirementType: RequirementType
     ) {
         super(ActionType.AddRequirement);

@@ -26,7 +26,7 @@
                 <button type="button" class="close" style="float: left;" aria-label="close" (click)="removeRequirement(r.id)">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <span>{{r.workUser.name + ', ' + r.requirementType.display + ', ' + r.priority.display}}</span>
+                <span>{{r.workUser.name + ', ' + r.requirementType.display}}</span>
             </div>
         </popover-content>
         <div class="row calendar-cell-requirements" [popover]="popoverRequirementsContent" [popoverDisabled]="!day.requirementsString" [popoverDismissTimeout]="0">

@@ -1,6 +1,6 @@
 import * as moment from 'moment';
 
-import { Calendar, Requirement, HourInfo, lowPriority, mediumPriority, highPriority, workReqType, freeReqType, vacationReqType, CalendarCell } from '../model';
+import { Calendar, Requirement, HourInfo, workReqType, freeReqType, vacationReqType, CalendarCell } from '../model';
 import { UserStore, DateService } from '../service';
 
 export const initAppState = <AppState>{
@@ -20,19 +20,14 @@ export class AppState {
 
     constructor(obj?: any, userStore?: UserStore) {
         if (obj) {
-            if (obj.selectedMonth) { 
-                this.selectedMonth = moment(obj.selectedMonth); 
+            if (obj.selectedMonth) {
+                this.selectedMonth = moment(obj.selectedMonth);
             }
             if (obj.requirements) {
                 this.requirements = obj.requirements.map(r => {
                     return new Requirement({
                         id: r.id,
                         date: moment(r.date),
-                        priority: r.priority.value === 1
-                            ? lowPriority
-                            : r.priority.value === 2
-                                ? mediumPriority
-                                : highPriority,
                         workUser: userStore.getById(r.workUser.id),
                         requirementType: r.requirementType.value === 1
                             ? freeReqType

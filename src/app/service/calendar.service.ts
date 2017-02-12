@@ -4,7 +4,7 @@ import * as moment from 'moment';
 import { Observer } from 'rxjs';
 
 
-import { CalendarCell, Calendar, highPriority, vacationReqType, Requirement, IRequirement, Weekdays } from '../model';
+import { CalendarCell, Calendar, vacationReqType, Requirement, IRequirement, Weekdays } from '../model';
 import { DateService } from './date.service';
 import { UserStore, workUserMarianaId } from './user.store';
 import { Action, AddRequirementAction } from '../state';
@@ -67,7 +67,6 @@ export class CalendarService {
               id: idHolder.id++,
               date: d.date,
               workUser: this.userStore.getById(workUserMarianaId),
-              priority: highPriority,
               requirementType: vacationReqType
             }));
           }

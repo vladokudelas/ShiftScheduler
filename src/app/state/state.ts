@@ -88,7 +88,6 @@ function reduceState(
                 state.requirements.push(new Requirement(<IRequirement>{
                     id: requirementsIdCounter++,
                     date: a.date,
-                    priority: a.priority,
                     workUser: a.workUser,
                     requirementType: a.requirementType
                 }));
@@ -163,7 +162,7 @@ function sendNewState(state: AppState, http: Http, isSaveAction: boolean) {
     let prom = http.post(url, JSON.stringify(content), options)
                 .toPromise();
     if (isSaveAction) {
-        prom.then((val)=>{
+        prom.then((val) => {
             alert('Saved ' + val);
         }).catch((val) => {
             console.error(val);
