@@ -19,6 +19,9 @@
         "styles": [
             "../node_modules/font-awesome/css/font-awesome.css",
             "../node_modules/bootstrap/dist/css/bootstrap.css",
+            "../node_modules/jquery-ui-dist/jquery-ui.min.css",
+            "../node_modules/jquery-ui-dist/jquery-ui.theme.min.css",
+            "../node_modules/jquery-ui-dist/jquery-ui.structure.min.css",
             "../node_modules/@swimlane/ngx-datatable/release/datatable.css",
             "../node_modules/@swimlane/ngx-datatable/release/material.css",
             "../node_modules/@swimlane/ngx-datatable/release/assets/icons.css",
@@ -26,6 +29,8 @@
         ],
         "scripts": [
             "../node_modules/jquery/dist/jquery.js",
+            "../node_modules/jquery-ui-dist/jquery-ui.min.js",
+            "../node_modules/multiple-dates-picker/jquery-ui.multidatespicker.js",
             "../node_modules/tether/dist/js/tether.js",
             "../node_modules/bootstrap/dist/js/bootstrap.js"
         ],

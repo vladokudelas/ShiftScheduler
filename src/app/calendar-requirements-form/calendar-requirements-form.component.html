@@ -1,45 +1,45 @@
-<div class="col" style="width: 500px;">
+<div class="col">
     <div class="card">
         <div class="card-block">
             <h4 class="card-title">Poziadavky</h4>
             <form class="form-horizontal" #calendarRequirementsForm="ngForm">
                 <div class="row">
-                    <div class="col-7">
+                    <div class="col-8">
                         <div class="form-group row">
                             <label for="date" class="col-3 col-form-label">Den</label>
                             <div class="col-9">
-                                <input class="form-control" [(ngModel)]="date" required type="date" id="date" name="date">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="workUser" class="col-3 col-form-label">Osoba</label>
-                            <div class="col-9">
-                                <select required class="form-control" id="workUser" [ngModel]="workUser ? workUser.id : 0" (ngModelChange)="setWorkUser($event)"
-                                    name="workUser">
-                            <option selected value="0"> -- select -- </option>
-                            <option *ngFor="let workUser of workUsers" [value]="workUser.id">{{workUser.name}}</option>
-                        </select>
+                                <multidatepicker name="date" #multiDatePicker></multidatepicker>
                             </div>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group row">
+                            <label for="workUser" class="col-3 col-form-label">Osoba</label>
+                            <div class="col-9">
+                                <select required class="form-control" id="workUser" [ngModel]="workUser ? workUser.id : 0" (ngModelChange)="setWorkUser($event)"
+                                    name="workUser">
+                                    <option selected value="0"> -- select -- </option>
+                                    <option *ngFor="let workUser of workUsers" [value]="workUser.id">{{workUser.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="month" class="col-3 col-form-label">Typ</label>
                             <div class="col-9">
                                 <label class="form-check" *ngFor="let type of _requirementTypes">
-                          <input class="form-check-input" 
-                              type="radio"
-                              name="type"
-                              [id]="'type' + type.value"
-                              [value]="type.value"
-                              [ngModel]="requirementType.value"
-                              (ngModelChange)="setRequirementType($event)"> {{type.display}}
-                      </label>
+                                    <input class="form-check-input" 
+                                        type="radio"
+                                        name="type"
+                                        [id]="'type' + type.value"
+                                        [value]="type.value"
+                                        [ngModel]="requirementType.value"
+                                        (ngModelChange)="setRequirementType($event)"> {{type.display}}
+                                </label>
                             </div>
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary" [disabled]="!date || !workUser || !requirementType" (click)="addRequirement();">Pridat</button>
+                <button type="submit" class="btn btn-primary" [disabled]="!workUser || !requirementType || !isDateSelected()" (click)="addRequirement();">Pridat</button>
             </form>
         </div>
     </div>

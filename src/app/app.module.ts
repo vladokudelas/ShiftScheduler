@@ -18,6 +18,7 @@ import { CalendarRequirementsComponent } from './calendar-requirements/calendar-
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { PopoverModule } from 'ng2-popover';
 import { CalendarFilterComponent } from './calendar-filter/calendar-filter.component';
+import { MultidatepickerComponent } from './multidatepicker/multidatepicker.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { CalendarFilterComponent } from './calendar-filter/calendar-filter.compo
     CalendarHoursComponent,
     CalendarRequirementsFormComponent,
     CalendarRequirementsComponent,
-    CalendarFilterComponent
+    CalendarFilterComponent,
+    MultidatepickerComponent
   ],
   imports: [
     BrowserModule,

@@ -32,7 +32,7 @@ export class GenerateCalendarAction extends BaseAction {
 
 export class AddRequirementAction extends BaseAction {
     constructor(
-        public date: moment.Moment,
+        public dates: moment.Moment[],
         public workUser: WorkUser,
         public requirementType: RequirementType
     ) {

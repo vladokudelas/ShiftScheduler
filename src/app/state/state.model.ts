@@ -43,7 +43,7 @@ export class AppState {
                     obj.calendar.calendar.forEach(w => {
                         let week = [];
                         w.forEach(d => {
-                            let c = new CalendarCell(d.day, moment(d.date));
+                            let c = new CalendarCell(d.day, moment(d.date), this.selectedMonth);
                             c.isHoliday = d.isHoliday;
                             c.shiftHours = d.shiftHours;
                             if (d.workUser) {

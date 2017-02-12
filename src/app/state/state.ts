@@ -85,12 +85,15 @@ function reduceState(
                 break;
             case ActionType.AddRequirement:
                 let a = <Actions.AddRequirementAction>action;
-                state.requirements.push(new Requirement(<IRequirement>{
-                    id: requirementsIdCounter++,
-                    date: a.date,
-                    workUser: a.workUser,
-                    requirementType: a.requirementType
-                }));
+
+                a.dates.forEach(d => {
+                    state.requirements.push(new Requirement(<IRequirement>{
+                        id: requirementsIdCounter++,
+                        date: d,
+                        workUser: a.workUser,
+                        requirementType: a.requirementType
+                    }));
+                });
                 state.calendar = calendarService.setRequirementsInCalendar(state.selectedMonth, state.calendar, state.requirements);
                 break;
             case ActionType.RemoveRequirement:
@@ -131,7 +134,7 @@ function reduceState(
         }
 
         if (saveState) {
-            sendNewState(state, http, false);
+            // sendNewState(state, http, false);
         }
 
         return state;
@@ -160,7 +163,7 @@ function sendNewState(state: AppState, http: Http, isSaveAction: boolean) {
     }
 
     let prom = http.post(url, JSON.stringify(content), options)
-                .toPromise();
+        .toPromise();
     if (isSaveAction) {
         prom.then((val) => {
             alert('Saved ' + val);

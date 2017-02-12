@@ -1,7 +1,8 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Input, ViewChild } from '@angular/core';
 import { Observer } from 'rxjs';
 import * as moment from 'moment';
 
+import { MultidatepickerComponent } from '../multidatepicker/multidatepicker.component';
 import { UserStore } from '../service';
 import { WorkUser, requirementTypes, RequirementType } from '../model';
 import { Action, dispatcherToken, AddRequirementAction } from '../state';
@@ -15,10 +16,12 @@ export class CalendarRequirementsFormComponent implements OnInit {
 
   public workUsers: WorkUser[] = [];
 
-  public date;
   public workUser: WorkUser;
   public requirementType: RequirementType = requirementTypes[0];
   public _requirementTypes = requirementTypes;
+
+  @Input() public selectedMonth: moment.Moment;
+  @ViewChild('multiDatePicker') multiDatePicker: MultidatepickerComponent;
 
   constructor(
     public userStore: UserStore,
@@ -26,7 +29,7 @@ export class CalendarRequirementsFormComponent implements OnInit {
   ) {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.workUsers = this.userStore.getWorkers();
   }
 
@@ -49,13 +52,20 @@ export class CalendarRequirementsFormComponent implements OnInit {
     }
   }
 
+  public isDateSelected(): boolean {
+    return this.multiDatePicker.getValue() && this.multiDatePicker.getValue().length > 0;
+  }
+
   public addRequirement() {
-    this.dispatcher.next(new AddRequirementAction(moment(this.date), this.workUser, this.requirementType));
+    const dates = [];
+    this.multiDatePicker.getValue().forEach(d => dates.push(moment(d)));
+
+    this.dispatcher.next(new AddRequirementAction(dates, this.workUser, this.requirementType));
     this.reset();
   }
 
   private reset() {
-    this.date = undefined;
+    this.multiDatePicker.writeValue(undefined);
     this.requirementType = requirementTypes[0];
     this.workUser = undefined;
   }

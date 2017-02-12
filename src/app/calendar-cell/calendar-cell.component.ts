@@ -18,7 +18,7 @@ import { RemoveRequirementAction } from '../state';
 export class CalendarCellComponent implements OnInit {
 
   @Input()
-  public day: CalendarCell = new CalendarCell(undefined, undefined);
+  public day: CalendarCell = new CalendarCell(undefined, undefined, undefined);
 
   @Input()
   private requirements: Requirement[] = [];
