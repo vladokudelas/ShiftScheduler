@@ -1,5 +1,5 @@
 import { forwardRef, Component, AfterViewInit, ViewChild, ElementRef, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 const DATE_PICKER_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
@@ -13,13 +13,14 @@ const DATE_PICKER_VALUE_ACCESSOR = {
   providers: [DATE_PICKER_VALUE_ACCESSOR]
 })
 export class MultidatepickerComponent implements AfterViewInit, ControlValueAccessor, OnDestroy {
-  private onTouched = () => { };
-  private onChange: (value: string) => void = () => { };
 
   @Input() value = [];
   @Output() dateChange = new EventEmitter();
   @Input() options: any = {};
   @ViewChild('input') input: ElementRef;
+
+  private onTouched = () => { };
+  private onChange: (value: string) => void = () => { };
 
   public writeValue(dates: Array<Date>) {
     this.value = dates;
