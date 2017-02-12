@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row no-print">
         <app-calendar-form #calendarForm (generateCells)="generateCells(calendarForm.month)" [month]="renderMonth"></app-calendar-form>
-        <app-calendar-requirements-form [selectedMonth]="selectedMonth"></app-calendar-requirements-form>
+        <app-calendar-requirements-form></app-calendar-requirements-form>
         <!--<app-calendar-requirements></app-calendar-requirements>-->
         <div>
             <button class="btn btn-primary" (click)="print()">Print</button>

@@ -20,7 +20,6 @@ export class CalendarRequirementsFormComponent implements OnInit {
   public requirementType: RequirementType = requirementTypes[0];
   public _requirementTypes = requirementTypes;
 
-  @Input() public selectedMonth: moment.Moment;
   @ViewChild('multiDatePicker') multiDatePicker: MultidatepickerComponent;
 
   constructor(

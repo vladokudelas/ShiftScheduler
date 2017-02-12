@@ -42,6 +42,7 @@ export class MultidatepickerComponent implements AfterViewInit, ControlValueAcce
   public ngAfterViewInit() {
     this.getElement().multiDatesPicker(
       Object.assign({}, this.options, {
+        firstDay: 1,
         onSelect: (value) => {
           this.value = value;
 
