@@ -94,7 +94,11 @@ function reduceState(
                         requirementType: a.requirementType
                     }));
                 });
-                state.calendar = calendarService.setRequirementsInCalendar(state.selectedMonth, state.calendar, state.requirements);
+
+                if (state.calendar) {
+                    state.calendar = calendarService.setRequirementsInCalendar(state.selectedMonth, state.calendar, state.requirements);
+                    ruleService.assignWorkUsersAccordingToRequirements(state.calendar, state.requirements);
+                }
                 break;
             case ActionType.RemoveRequirement:
                 let reqIdxToRemove = state.requirements.findIndex(r => r.id === (<Actions.RemoveRequirementAction>action).id);
@@ -134,7 +138,7 @@ function reduceState(
         }
 
         if (saveState) {
-            // sendNewState(state, http, false);
+            sendNewState(state, http, false);
         }
 
         return state;
