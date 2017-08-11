@@ -1,10 +1,12 @@
 <div class="col">
     <div class="card">
-        <div class="card-block">
-            <h4 class="card-title">Poziadavky</h4>
+        <div class="card-header">
+            Poziadavky
+        </div>
+        <div class="card-body">
             <form class="form-horizontal" #calendarRequirementsForm="ngForm">
                 <div class="row">
-                    <div class="col-8">
+                    <div class="col card-req-col">
                         <div class="form-group row">
                             <label for="date" class="col-3 col-form-label">Den</label>
                             <div class="col-9">
@@ -12,10 +14,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col card-req-col" style="margin-left: 110px;">
                         <div class="form-group row">
-                            <label for="workUser" class="col-3 col-form-label">Osoba</label>
-                            <div class="col-9">
+                            <label for="workUser" class="col-4 col-form-label">Osoba</label>
+                            <div class="col card-req-col">
                                 <select required class="form-control" id="workUser" [ngModel]="workUser ? workUser.id : 0" (ngModelChange)="setWorkUser($event)"
                                     name="workUser">
                                     <option selected value="0"> -- select -- </option>
@@ -25,7 +27,7 @@
                         </div>
                         <div class="form-group row">
                             <label for="month" class="col-3 col-form-label">Typ</label>
-                            <div class="col-9">
+                            <div class="col card-req-col">
                                 <label class="form-check" *ngFor="let type of _requirementTypes">
                                     <input class="form-check-input" 
                                         type="radio"

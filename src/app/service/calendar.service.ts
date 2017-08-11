@@ -6,7 +6,7 @@ import { Observer } from 'rxjs';
 
 import { CalendarCell, Calendar, vacationReqType, Requirement, IRequirement, Weekdays } from '../model';
 import { DateService } from './date.service';
-import { UserStore, workUserMarianaId } from './user.store';
+import { UserStore } from './user.store';
 import { Action, AddRequirementAction } from '../state';
 
 @Injectable()
@@ -54,23 +54,7 @@ export class CalendarService {
 
     if (calendar) {
       calendar.getAllDays().forEach(d => {
-        // Rule for mariana Sunday and Monday free
-        if (selectedMonth && d.date.month() === selectedMonth.month() && (d.isSunday || d.day === Weekdays.Monday)) {
-
-          let isFound = false;
-          existingRequirements.forEach(r => {
-            isFound = isFound || (r.workUser.id === workUserMarianaId && r.date.isSame(d.date, 'day'));
-          });
-
-          if (!isFound) {
-            result.push(new Requirement(<IRequirement>{
-              id: idHolder.id++,
-              date: d.date,
-              workUser: this.userStore.getById(workUserMarianaId),
-              requirementType: vacationReqType
-            }));
-          }
-        }
+        
       });
     }
 

@@ -1,20 +1,22 @@
 <div class="col">
     <div class="card">
-        <div class="card-block">
-            <h4 class="card-title">Poziadavky zoznam</h4>
+        <div class="card-header">
+            Poziadavky zoznam
+        </div>
+        <div class="card-body">
             <ngx-datatable [rows]="rows" [rowHeight]="'auto'" [headerHeight]="50" [footerHeight]="50">
                 <ngx-datatable-column name="" width="30">
-                    <template let-row="row" ngx-datatable-cell-template>
+                    <ng-template let-row="row" ngx-datatable-cell-template>
                         <button type="button" class="close" style="float: left;" aria-label="close" (click)="removeRequirement(row.id)">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                    </template>
+                    </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column name="Den" prop="dateDisplay"  [draggable]="false" width="100">
+                <ngx-datatable-column name="Den" prop="dateDisplay" [draggable]="false" width="100">
                 </ngx-datatable-column>
                 <ngx-datatable-column name="Osoba" prop="workUser.name" [draggable]="false" width="100">
                 </ngx-datatable-column>
-                <ngx-datatable-column name="Priorita" prop="priority.display"  [draggable]="false" width="100">
+                <ngx-datatable-column name="Priorita" prop="priority.display" [draggable]="false" width="100">
                 </ngx-datatable-column>
                 <ngx-datatable-column name="Type" prop="requirementType.display" [draggable]="false" width="70">
                 </ngx-datatable-column>

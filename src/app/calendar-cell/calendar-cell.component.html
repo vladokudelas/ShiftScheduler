@@ -1,7 +1,7 @@
 <div class="card col calendar-cell" [id]="day.dateString" [ngClass]="day.cssClass">
     <div class="card-block">
         <popover-content #popoverInvalidContent placement="top">
-            <div class="row col" *ngFor="let m of day.invalidMessages">
+            <div class="row col cal-popup" *ngFor="let m of day.invalidMessages">
                 <span>{{m}}</span>
             </div>
         </popover-content>
@@ -22,8 +22,8 @@
             </fieldset>
         </div>
         <popover-content #popoverRequirementsContent>
-            <div class="row col" *ngFor="let r of day.requirements">
-                <button type="button" class="close" style="float: left;" aria-label="close" (click)="removeRequirement(r.id)">
+            <div class="row col cal-popup" *ngFor="let r of day.requirements">
+                <button type="button" class="close" style="float: left; line-height: 0.8; font-size: 1rem;" aria-label="close" (click)="removeRequirement(r.id)">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <span>{{r.workUser.name + ', ' + r.requirementType.display}}</span>

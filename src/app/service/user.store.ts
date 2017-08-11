@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { WorkUser } from '../model/work-user';
 
-export let workUserMarianaId = 4;
-
 @Injectable()
 export class UserStore {
 
@@ -14,7 +12,7 @@ export class UserStore {
       new WorkUser({ id: 1, name: 'Katka', colorCss: 'katka-bckg', shortcut: 'Ku' }),
       new WorkUser({ id: 2, name: 'Matej', colorCss: 'matej-bckg', shortcut: 'Gl' }),
       new WorkUser({ id: 3, name: 'David', colorCss: 'david-bckg', shortcut: 'Kš' }),
-      new WorkUser({ id: workUserMarianaId, name: 'Mariana', colorCss: 'mariana-bckg', shortcut: 'Mi' }),
+      new WorkUser({ id: 4, name: 'Botos', colorCss: 'mariana-bckg', shortcut: 'Bo' }),
       new WorkUser({ id: 5, name: 'Honza', colorCss: 'honza-bckg', shortcut: 'Ad' }),
       new WorkUser({ id: 6, name: 'Tomas', colorCss: 'tomas-bckg', shortcut: 'Vo' })
     ];

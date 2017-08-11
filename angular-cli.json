@@ -22,17 +22,17 @@
             "../node_modules/jquery-ui-dist/jquery-ui.min.css",
             "../node_modules/jquery-ui-dist/jquery-ui.theme.min.css",
             "../node_modules/jquery-ui-dist/jquery-ui.structure.min.css",
-            "../node_modules/@swimlane/ngx-datatable/release/datatable.css",
-            "../node_modules/@swimlane/ngx-datatable/release/material.css",
+            "../node_modules/@swimlane/ngx-datatable/release/index.css",
+            "../node_modules/@swimlane/ngx-datatable/release/themes/material.css",
             "../node_modules/@swimlane/ngx-datatable/release/assets/icons.css",
             "styles.css"
         ],
         "scripts": [
             "../node_modules/jquery/dist/jquery.js",
             "../node_modules/jquery-ui-dist/jquery-ui.min.js",
-            "../node_modules/multiple-dates-picker/jquery-ui.multidatespicker.js",
-            "../node_modules/tether/dist/js/tether.js",
-            "../node_modules/bootstrap/dist/js/bootstrap.js"
+            "../node_modules/popper.js/dist/umd/popper.min.js",
+            "../node_modules/bootstrap/dist/js/bootstrap.js",
+            "../node_modules/multiple-dates-picker/jquery-ui.multidatespicker.js"
         ],
         "environments": {
             "source": "environments/environment.ts",
